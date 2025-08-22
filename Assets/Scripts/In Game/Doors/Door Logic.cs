@@ -57,9 +57,15 @@ public class DoorLogic : MonoBehaviour
         return isTouching;
     }
 
+    // TODO: Remove after use
+
+    #if UNITY_EDITOR
+
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(topDoor.position, doorHitbox);
         Gizmos.DrawWireCube(botDoor.position, doorHitbox);
     }
+
+    #endif
 }

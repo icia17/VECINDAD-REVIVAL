@@ -42,9 +42,14 @@ public class AttackPlayer : MonoBehaviour
         }
     }
 
+    // TODO: Remove after use
+
+    #if UNITY_EDITOR
+
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPos.position, attackRadius);
     }
-    
+
+    #endif
 }

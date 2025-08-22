@@ -1,0 +1,5 @@
+1. Cada mancha de sangre tiene 2 scripts, 1 audiosource y 1 animator. Gasta muchos recursos. Deberia haber un manager para eso.
+
+2. Se deberia usar herencia para los lobos.
+
+3. Las balas que no sean explosivas no deberian ser instanciadas y hacer solo un raycast ta bien.
