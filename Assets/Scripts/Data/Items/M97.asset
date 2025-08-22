@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65d23d53dfb024f4ba6cd6b16b07141c, type: 3}
+  m_Name: M97
+  m_EditorClassIdentifier: 
+  itemType: 0
+  itemSprite: {fileID: 21300000, guid: c54d982c3a38c524a999d3107f492df8, type: 3}
+  itemName: M-97
+  itemPrice: 20000
+  wearSFX: {fileID: 8300000, guid: 9ebc158963851a64b9723a373592334d, type: 3}
+  bullet: {fileID: 9206065028882264713, guid: f61feda2291f47e4698bca87f4f7f39c, type: 3}
+  shootPos: {x: 0.62, y: 0, z: 0}
+  screenShake: {x: 0, y: -0.5, z: 0}
+  outerMuzzleLight: 8
+  rate: 1
+  ammo: 1
+  unchangedAmmo: 1
+  totalAmmo: 12
+  unchangedTotalAmmo: 12
+  reloadTime: 3
+  itemId: 2
+  canFire: 0
+  reloading: 0
+  singleShot: 1
+  reloadSFX: {fileID: 8300000, guid: 0d185d421d3829a43b0a329e6acdb784, type: 3}
+  shootSFX: {fileID: 8300000, guid: 0437f86f2713fda45b089756fe81bea9, type: 3}
+  fireRateCost: 0
+  magSizeCost: 0
+  maxCapacityCost: 4500
+  reloadTimeCost: 12500
+  heldSprite: {fileID: 0}
+  swingSpeed: 0
+  swingCooldown: 0
+  damage: 0
+  reach: 0
+  uses: 0
+  swung: 0
+  spawn: {fileID: 0}
+  placerSprite: {fileID: 0}
+  radius: 0
+  buildSFX: 

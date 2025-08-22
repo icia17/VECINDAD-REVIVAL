@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Exit
+  - Money
+  - Wolf
+  - Wall
+  - AmmoBox
+  - NavMesh
+  - Placer
+  - Turret
+  - Throwaway
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Player
+  - Water
+  - UI
+  - Wall
+  - Wolf
+  - Bullet
+  - Ground
+  - Placeable
+  - Placer
+  - Melee
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 1011102289
+    locked: 0
+  - name: Wall
+    uniqueID: 3034498587
+    locked: 0
+  - name: Dropdown
+    uniqueID: 1572147559
+    locked: 0

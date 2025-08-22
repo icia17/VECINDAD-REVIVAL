@@ -1,0 +1,190 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class WaveManager : MonoBehaviour
+{
+    [Header("Wave Count")]
+    public static float wave = 0;
+
+    [Header("Wolf Spawners and Holder")]
+    [SerializeField] List<Transform> spawn;
+    [SerializeField] Transform wolfHolder;
+
+    [Header("Wolf Types")]
+    [SerializeField] List<GameObject> wolves;
+
+    [Header("Wave Specific Wolf Amount")]
+    [SerializeField] int wolfAmount = 15;
+    
+    [Header("Max Wolves Present at Once")]
+    [SerializeField] int maxAmount = 5;
+
+    [Header("Wave Specific Wolf 1/X Spawn Chance")]
+    [SerializeField] List<int> percent;
+    
+    [Header("Timer Countdown")]
+    [SerializeField] float timerCD;
+    
+    [Header("Current State Text Object")]
+    [SerializeField] TextMeshProUGUI stateObject;
+
+    [Header("Lightbulbs Game Object")]
+    [SerializeField] Animator lights;
+
+    [Header("Enable/Disable Objects")]
+    [SerializeField] GameObject weaponStoreButton;
+    [SerializeField] GameObject weaponStoreParent;
+    [SerializeField] GameObject buildStoreButton;
+    [SerializeField] GameObject buildStoreParent;
+    [SerializeField] GameObject meleeStoreButton;
+    [SerializeField] GameObject meleeStoreParent;
+    [SerializeField] GameObject hud;
+    [SerializeField] GameObject tutorial;
+
+    public static int wolvesLeft;
+    float baseTimerCD;
+    int wolfCount;
+    int wolvesToSpawn;
+
+    private void Start() {
+        GameManager.State = GameState.Timer;
+
+        baseTimerCD = timerCD;
+        wolvesToSpawn = wolfAmount;
+        wolvesLeft = wolfAmount;
+
+        wave = 0;
+    }
+
+    private void Update() {
+        wolfCount = wolfHolder.childCount;
+
+        switch (GameManager.State) {
+            case GameState.Timer:
+                Timer();
+                break;
+            case GameState.Wave:
+                Wave();
+                break;
+            case GameState.Lose:
+                Lose();
+                break;
+        }
+    }
+
+    private void Timer() {
+        timerCD -= Time.deltaTime;
+        
+        stateObject.text = "Intermisión: " + Mathf.RoundToInt(timerCD) + "s";
+        
+        if (Input.GetMouseButtonDown(1)) {
+            timerCD = 0;
+        }
+
+        if (timerCD <= 0) {
+            tutorial.SetActive(false);
+
+            // Wave Start Animation goes here!
+            wave++;
+            wolvesToSpawn = wolfAmount;
+
+            GameManager.State = GameState.Wave;
+
+            timerCD = baseTimerCD;
+            
+            GameManager.inStore = false;
+            
+            if (buildStoreParent.activeSelf || weaponStoreParent.activeSelf || meleeStoreParent.activeSelf) {
+                meleeStoreParent.SetActive(false);
+                weaponStoreParent.SetActive(false);
+                buildStoreParent.SetActive(false);
+                hud.SetActive(true);
+            }
+
+            meleeStoreButton.SetActive(false);
+            weaponStoreButton.SetActive(false);
+            buildStoreButton.SetActive(false);
+
+            if (!AudioManager.Instance.musicSource.isPlaying) {
+                string index = Random.Range(0,2).ToString();
+
+                AudioManager.Instance.PlayMusic(index);
+            }
+
+            AudioManager.Instance.audioMixer.SetFloat("lowpass", 5000);
+
+            lights.Play("Off");
+            return;
+        }
+    }
+
+    private void Wave() {
+        stateObject.text = "Oleada " + wave;
+        
+        Vector2 chosenSpawn = spawn[Random.Range(0,spawn.Count)].transform.position;
+
+        if (wolfCount <= maxAmount) {
+
+            for (int i = 0; i < wolves.Count; i++) {
+
+                if (Random.Range(1, percent[i]) == 1 && wolvesToSpawn > 0) {
+                    wolvesToSpawn--;
+                    Instantiate(wolves[i], chosenSpawn, Quaternion.identity, wolfHolder);
+                }
+
+            }
+
+        }
+
+        if (wolvesLeft < 1) {
+            NextWaveBuffs();
+
+            GameManager.State = GameState.Timer;
+
+            meleeStoreButton.SetActive(true);
+            weaponStoreButton.SetActive(true);
+            buildStoreButton.SetActive(true);
+
+            DestroyEmptyTurrets();
+
+            BuildsStoreManager.stock = 2;
+                        
+            AudioManager.Instance.audioMixer.SetFloat("lowpass", 500);
+
+            lights.Play("On");
+        }
+    }
+
+    private void DestroyEmptyTurrets()
+    {
+        TurretRangedController[] turrets = FindObjectsOfType<TurretRangedController>();
+
+        foreach(var turret in turrets) {
+            if (turret.empty) {
+                Destroy(turret.transform.parent.gameObject);
+            }
+        }
+    }
+
+    private void NextWaveBuffs()
+    {
+        wolfAmount += 1;
+        wolvesLeft = wolfAmount;
+
+        for(int i = 0; i < percent.Count; i++) {
+            if (percent[i] == 1) { continue; } 
+
+            percent[i] -= 1;
+        }
+
+        if ((wave + 1) % 3 == 0) {
+            maxAmount++;
+        }
+    }
+
+    private void Lose() {
+        AudioManager.Instance.musicSource.volume = 0.5f;
+    }
+}
