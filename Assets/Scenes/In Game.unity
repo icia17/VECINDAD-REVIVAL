@@ -6155,7 +6155,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 150
   field of view: 34
   orthographic: 1
   orthographic size: 12
@@ -11198,7 +11198,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 122.400024, y: 50}
+  m_AnchoredPosition: {x: 122.40015, y: 50}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &799669566
@@ -139720,7 +139720,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -61.150024, y: -344.25}
+  m_AnchoredPosition: {x: -61.150146, y: -344.25}
   m_SizeDelta: {x: 122.3, y: 668.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1518471093
@@ -147263,7 +147263,7 @@ MonoBehaviour:
     FieldOfView: 34
     OrthographicSize: 12
     NearClipPlane: 0.3
-    FarClipPlane: 1000
+    FarClipPlane: 150
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
