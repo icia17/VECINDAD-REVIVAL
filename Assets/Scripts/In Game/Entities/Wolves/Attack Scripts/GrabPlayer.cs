@@ -1,12 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations;
 
-public class GrabPlayer : MonoBehaviour
+public class GrabPlayer : MonoBehaviour, IGrabber
 {
-    WolfLifeController wolfLifeController;
     RedWalkToTarget redWalkToTarget;
 
     [Header("Player layer")]
@@ -20,101 +20,99 @@ public class GrabPlayer : MonoBehaviour
     public float damage;
     public float damageCD;
 
-    [HideInInspector]
-    public bool grabbed = false;
+    private IGrabbable grabbedPlayer;
+    private float baseDamageCD;
 
-    Collider2D grabbedPlayer;
-    float baseDamageCD;
-
-    private void Start() {
-        wolfLifeController = GetComponentInParent<WolfLifeController>();    
-        redWalkToTarget = GetComponentInParent<RedWalkToTarget>();
-
+    private void Awake()
+    {
+        if (TryGetComponent<WolfHealthController>(out var wolfHealthController))
+            wolfHealthController.OnDeath.AddListener(() => { Destroy(this); });
+        else
+            Debug.Log("Wolf Health Controller Not Found!");
+        
+        if (!TryGetComponent(out redWalkToTarget))
+            Debug.Log("Red Walk To Target Not Found!");
+        
         baseDamageCD = damageCD;
 
         damageCD = 0.0f;
     }
 
-    private void Update() {
-        if (Attack() && !grabbed) {
-            grabbed = true;
-            Grab();
-        }
+    private void OnDestroy()
+    {
+        if (grabbedPlayer != null) 
+            ForceRelease(false);
+    }
 
-        if (grabbed) {
-            MoveGrabbedPlayer();
-            DoDamage();
+    private void Update()
+    {
+        if (!IsGrabbing())
+        {
+            grabbedPlayer = TryGrabPlayer();
+        }
+        else
+        {
+            grabbedPlayer.Hold(transform.position);
+            GripDamage();
             CheckDestination();
         }
-
-        if (grabbed && wolfLifeController.isDead && grabbedPlayer != null) {
-            grabbed = false;
-
-            grabbedPlayer.GetComponentInParent<GrabPosition>().FreePlayer();
-        }
     }
     
-    private bool Attack() {
-        var isColliding = Physics2D.OverlapCircle(attackPos.position, attackRadius, layer);
-        return isColliding;
-    }
+    private IGrabbable TryGrabPlayer()
+    {
+        Collider2D col = Physics2D.OverlapCircle(attackPos.position, attackRadius, layer);
+        
+        if (col != null)
+        {
+            var grabbable = col.GetComponentInParent<IGrabbable>();
 
-    private void Grab() {
-        grabbedPlayer = Physics2D.OverlapCircle(attackPos.position, attackRadius, layer);
-
-        PlayerInventory inv = grabbedPlayer.GetComponent<PlayerInventory>();
-
-        if (inv == null) return;
-
-        inv.selectedItem.reloading = false;
-        inv.selectedItem.swung = false;
-    }
-
-    private void MoveGrabbedPlayer() {
-        if (grabbedPlayer == null) {
-            grabbed = false;
-            return; 
+            if (grabbable != null && !grabbable.IsGrabbed() && grabbable.CanGrab())
+            {
+                grabbable.Grab(this);
+                grabbable.EnableGrab(false);
+                return grabbable;
+            }
         }
 
-        GrabPosition grabPosition = grabbedPlayer.GetComponentInParent<GrabPosition>();
-
-        if (!grabPosition.grabbed) {
-            grabPosition.SetPosition(transform, !wolfLifeController.isDead);
-        }
+        return null;
     }
     
-    private void DoDamage() {
+    public void ForceRelease(bool preventGrab)
+    {
+        Debug.Log("FORCED RELEASE!");
+        grabbedPlayer?.Release();
+
+        grabbedPlayer?.EnableGrab(!preventGrab);
+        
+        grabbedPlayer = null;
+    }
+
+    public bool IsGrabbing()
+    {
+        return grabbedPlayer != null;
+    }
+    
+    private void GripDamage() {
         damageCD -= Time.deltaTime;
 
-        if (damageCD > 0 || grabbedPlayer == null) { return; }
-
-        PlayerHealth playerHealth = grabbedPlayer.GetComponentInParent<PlayerHealth>();
-
-        playerHealth.TakeDamage(damage);
-
-        damageCD = baseDamageCD;
+        if (damageCD <= 0)
+        {
+            grabbedPlayer?.Grip(damage);
+            
+            damageCD = baseDamageCD;
+        }
     }
 
     private void CheckDestination() {
-        if (Vector2.Distance(transform.position, redWalkToTarget.closestExit.transform.position) < 0.1f && redWalkToTarget.goingToExit && grabbedPlayer != null) {
-            PlayerHealth playerHealth = grabbedPlayer.GetComponentInParent<PlayerHealth>();
-
-            if (playerHealth.health > 0) {
-                playerHealth.TakeDamage(playerHealth.health);
-            }
+        if (Vector2.Distance(transform.position, redWalkToTarget.closestExit.transform.position) < 0.1f &&
+            redWalkToTarget.goingToExit && grabbedPlayer != null)
+        {
+            grabbedPlayer.Squash();
             
-            wolfLifeController.wolfLife = 0.0f;
+            if (TryGetComponent<WolfHealthController>(out var wolfHealthController))
+                wolfHealthController.TakeMaxDamage();
+            else
+                Debug.Log("Wolf Health Controller Not Found!");
         }
     }
-
-    // TODO: Remove after use
-
-    #if UNITY_EDITOR
-
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPos.position, attackRadius);
-    }
-
-    #endif
 }

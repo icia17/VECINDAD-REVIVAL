@@ -384,10 +384,10 @@ GameObject:
   - component: {fileID: 919966519078863718}
   - component: {fileID: 4502681454508139745}
   - component: {fileID: 7093094392335640801}
+  - component: {fileID: -2371480638412526654}
   - component: {fileID: 7259628804913069297}
   - component: {fileID: 1420489969561360836}
   - component: {fileID: 818458876273740884}
-  - component: {fileID: 5735119700334076166}
   - component: {fileID: 6762406387597471777}
   - component: {fileID: 8438177132003813826}
   - component: {fileID: 3005660081657095953}
@@ -5198,24 +5198,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb4d9e6b8c51ac4e8aee1af350716ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wolfLife: 100
+  wolfHealth: 50
   animator: {fileID: 919966519078863718}
   OnDeath:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5735119700334076166}
-        m_TargetAssemblyTypeName: WolfPrizeMoney, Assembly-CSharp
-        m_MethodName: OnDeath
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  isDead: 0
+      m_Calls: []
+--- !u!114 &-2371480638412526654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958612038239487423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8397f84c1c31d48ab630afcac12f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cashReward: 150
 --- !u!114 &7259628804913069297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5262,19 +5262,6 @@ MonoBehaviour:
   - {fileID: 8715392741208162628}
   line: {fileID: 4745140590431701324}
   invisibilityTreshhold: 10
---- !u!114 &5735119700334076166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5958612038239487423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d8397f84c1c31d48ab630afcac12f87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prizeMoney: 100
 --- !u!114 &6762406387597471777
 MonoBehaviour:
   m_ObjectHideFlags: 0

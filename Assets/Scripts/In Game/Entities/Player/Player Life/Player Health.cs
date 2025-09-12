@@ -29,8 +29,17 @@ public class PlayerHealth : MonoBehaviour
     [HideInInspector]
     public bool bloodLust = false;
 
-    float baseBloodLossCD;
+    [HideInInspector]
+    public UnityEvent OnDeath;
     
+    float baseBloodLossCD;
+
+    private void Awake()
+    {
+        if (TryGetComponent<GrabPosition>(out var grabPosition))
+            grabPosition.OnSquashed.AddListener(() => TakeDamage(healthLimit));
+    }
+
     private void Start() {
         partSys = GetComponent<ParticleSystem>();   
         playerList = GetComponent<PlayerList>(); 
@@ -52,6 +61,7 @@ public class PlayerHealth : MonoBehaviour
         if (health <= 0 && alive)
         {
             alive = false;
+            OnDeath?.Invoke();
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             animator.Play("Death");
         }

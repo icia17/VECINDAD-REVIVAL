@@ -13,12 +13,12 @@ public class MeleeHitbox : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        var wolfLife = other.GetComponentInParent<WolfLifeController>();
+        var wolfLife = other.GetComponentInParent<WolfHealthController>();
         
         melee.currentWeapon.uses--;
         
         playerHealth.health += melee.currentWeapon.damage/20;
 
-        wolfLife.TakeSplatDamage(melee.currentWeapon.damage);
+        wolfLife.TakeDamage(melee.currentWeapon.damage, true);
     }
 }

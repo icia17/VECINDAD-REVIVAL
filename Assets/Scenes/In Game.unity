@@ -2382,7 +2382,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000015258789}
   m_SizeDelta: {x: 0, y: 53.833}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &194494983
@@ -143605,7 +143605,7 @@ MonoBehaviour:
   - {fileID: 7064027645856118006, guid: 6376e772885f92b49a46a99f203b4393, type: 3}
   wolfAmount: 15
   maxAmount: 5
-  percent: 010000000a00000032000000
+  percent: 320000000a00000001000000
   timerCD: 60
   stateObject: {fileID: 2031519332}
   lights: {fileID: 1535177628}
@@ -143869,8 +143869,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1834825987}
   m_HandleRect: {fileID: 1834825986}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.81641364
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

@@ -69,7 +69,7 @@ public class PlayerRotateToWolf : MonoBehaviour
 
             arm.SetActive(false);
             hands.SetActive(false);
-        } else if (!arm.activeSelf && !grab.grabbed) {
+        } else if (!arm.activeSelf && !grab.IsGrabbed()) {
             armThisFrame = true;
             arm.SetActive(true);
             hands.SetActive(false);

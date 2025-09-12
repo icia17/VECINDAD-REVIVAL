@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
         Change();
 
-        if (grabPlayer.grabbed) { return; }
+        if (grabPlayer.IsGrabbed()) { return; }
         
         GatherInput();
         OnReload();
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Change() {
-        if (frameInput.Change || grabPlayer.grabbed) {
+        if (frameInput.Change || grabPlayer.IsGrabbed()) {
             StartCoroutine(chosenPlayerChanger.Change());
         }
     }

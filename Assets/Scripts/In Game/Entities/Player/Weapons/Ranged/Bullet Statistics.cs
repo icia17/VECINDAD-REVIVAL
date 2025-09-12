@@ -139,9 +139,9 @@ public class BulletStatistics : MonoBehaviour
             shooter.health += damage/10;
         }
 
-        var wolfLife = other.GetComponentInParent<WolfLifeController>();
+        var wolfLife = other.GetComponentInParent<WolfHealthController>();
 
-        wolfLife.TakeDamage(damage);
+        wolfLife.TakeDamage(damage, false);
     }
 
     private void ExplosionCheck() {

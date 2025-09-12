@@ -16,7 +16,7 @@ public class WalkToPlayer : MonoBehaviour
     PlayerHealth health;
     NavMeshAgent agent;
     ChosenPlayerChanger chosenPlayerChanger;
-    GrabPosition grabPlayer;
+    IGrabbable grabPlayer;
 
     float baseSpeed;
 
@@ -25,7 +25,7 @@ public class WalkToPlayer : MonoBehaviour
         health = GetComponent<PlayerHealth>();
         agent = GetComponent<NavMeshAgent>();
         chosenPlayerChanger = GetComponentInParent<ChosenPlayerChanger>();
-        grabPlayer = GetComponent<GrabPosition>();
+        grabPlayer = GetComponent<IGrabbable>();
         
         agent.updatePosition = false;
         agent.updateRotation = false;
@@ -64,9 +64,10 @@ public class WalkToPlayer : MonoBehaviour
         } else {
             agent.SetDestination(chosenPos);
 
-            if (!grabPlayer.grabbed) {
+            if (!grabPlayer.IsGrabbed()) 
                 transform.position = Vector2.Lerp(transform.position, agent.nextPosition, 0.1f);
-            }
+            else
+                agent.SetDestination(transform.position);
         }
     }
 

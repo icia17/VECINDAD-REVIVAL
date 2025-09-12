@@ -11,8 +11,7 @@ public class RedWalkToTarget : MonoBehaviour
     ClosestTarget closestTarget;
     NavMeshAgent agent;
     Vector3 posVelocity = Vector3.zero;
-    WolfLifeController wolfLife;
-    GrabPlayer grabPlayer;
+    IGrabber grabPlayer;
     GameObject[] exits;
     
     [HideInInspector]
@@ -21,12 +20,14 @@ public class RedWalkToTarget : MonoBehaviour
     [HideInInspector]
     public bool goingToExit = false;
 
+    private bool stopWalking = false;
+    
     private void Start() {
-        wolfLife = GetComponent<WolfLifeController>();
+        GetComponent<WolfHealthController>().OnDeath.AddListener(() => { stopWalking = true; });
         closestTarget = GetComponent<ClosestTarget>();
         agent = GetComponent<NavMeshAgent>();
         
-        grabPlayer = GetComponentInChildren<GrabPlayer>();
+        grabPlayer = GetComponentInChildren<IGrabber>();
 
         exits = GameObject.FindGameObjectsWithTag("Exit");
         closestExit = exits[0];
@@ -38,15 +39,15 @@ public class RedWalkToTarget : MonoBehaviour
 
     private void Update() {
         if (closestTarget.closestPlayer == null) return;
-
-        if (wolfLife.isDead) {
+        
+        if (stopWalking) {
             animator.Play("Idle");
             return; 
         }
         
         animator.Play("Walk");
 
-        if (grabPlayer.grabbed) {
+        if (grabPlayer.IsGrabbing()) {
             agent.SetDestination(closestExit.transform.position);
 
             goingToExit = true;
