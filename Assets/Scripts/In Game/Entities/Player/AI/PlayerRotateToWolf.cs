@@ -10,7 +10,7 @@ public class PlayerRotateToWolf : MonoBehaviour
     PlayerLOSController los;
     PlayerController player;
     NavMeshAgent agent;
-    GrabPosition grab;  
+    GrabbablePlayer grab;  
 
     [Header("Rotation Time")]
     [SerializeField] float rotateTime;
@@ -33,7 +33,7 @@ public class PlayerRotateToWolf : MonoBehaviour
         los = GetComponentInParent<PlayerLOSController>();    
         player = GetComponentInParent<PlayerController>();
         agent = GetComponentInParent<NavMeshAgent>();
-        grab = GetComponentInParent<GrabPosition>();
+        grab = GetComponentInParent<GrabbablePlayer>();
         ranged = GetComponentInParent<RangedController>();
     }
 

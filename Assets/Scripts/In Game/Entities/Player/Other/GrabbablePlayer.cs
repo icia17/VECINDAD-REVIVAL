@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GrabPosition : MonoBehaviour, IGrabbable
+public class GrabbablePlayer : MonoBehaviour, IGrabbable
 {
     [Header("Objects to deactivate")]
     public GameObject arm;

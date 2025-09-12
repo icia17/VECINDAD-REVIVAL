@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations;
 
-public class GrabPlayer : MonoBehaviour, IGrabber
+public class PlayerGrabber : MonoBehaviour, IGrabber
 {
     RedWalkToTarget redWalkToTarget;
 

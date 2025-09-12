@@ -36,7 +36,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        if (TryGetComponent<GrabPosition>(out var grabPosition))
+        if (TryGetComponent<GrabbablePlayer>(out var grabPosition))
             grabPosition.OnSquashed.AddListener(() => TakeDamage(healthLimit));
     }
 
