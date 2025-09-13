@@ -156,7 +156,7 @@ public class PlayerInventory : MonoBehaviour
     private void ChangeToRanged(int index) {   
         arm.SetActive(true);
 
-        muzzleFlash.ZeroIntensity();
+        muzzleFlash?.ZeroIntensity();
 
         rangedController.ChangeWeapon(inventory[index]);
     }

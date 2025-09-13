@@ -79,7 +79,6 @@ public class PlayerGrabber : MonoBehaviour, IGrabber
     
     public void ForceRelease(bool preventGrab)
     {
-        Debug.Log("FORCED RELEASE!");
         grabbedPlayer?.Release();
 
         grabbedPlayer?.EnableGrab(!preventGrab);

@@ -63,6 +63,8 @@ public class RangedController : MonoBehaviour
 
         currentWeapon = weaponChosen;
 
+        Debug.Log("WP CHANGE");
+
         spriteRenderer.sprite = currentWeapon.itemSprite;
 
         currentWeapon.reloading = false;
