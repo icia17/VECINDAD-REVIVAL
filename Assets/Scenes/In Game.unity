@@ -143889,7 +143889,7 @@ MonoBehaviour:
   - {fileID: 7064027645856118006, guid: 6376e772885f92b49a46a99f203b4393, type: 3}
   wolfAmount: 15
   maxAmount: 5
-  percent: 320000000a00000001000000
+  percent: 010000000a00000032000000
   timerCD: 60
   stateObject: {fileID: 2031519332}
   lights: {fileID: 1535177628}

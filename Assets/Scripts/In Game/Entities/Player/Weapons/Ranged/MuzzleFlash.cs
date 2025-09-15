@@ -7,7 +7,7 @@ public class MuzzleFlash : MonoBehaviour
 {
     private Light2D muzzleFlash;
 
-    void Start()
+    void Awake()
     {
         if (!TryGetComponent(out muzzleFlash))
         {

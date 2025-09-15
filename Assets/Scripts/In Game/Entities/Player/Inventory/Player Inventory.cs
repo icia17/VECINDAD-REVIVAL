@@ -90,6 +90,7 @@ public class PlayerInventory : MonoBehaviour
     }
     
     private void ChangeToWeapon() {
+        Debug.Log($"{gameObject.name} - Change To Weapon!");
         if (player.grabPlayer.IsGrabbed() || !player.playerHealth.alive) return;
 
         if (selectedItem != null) {
@@ -154,6 +155,7 @@ public class PlayerInventory : MonoBehaviour
     }
 
     private void ChangeToRanged(int index) {   
+        Debug.Log($"{gameObject.name} - Trying to change to ranged of index {index}");
         arm.SetActive(true);
 
         muzzleFlash?.ZeroIntensity();
