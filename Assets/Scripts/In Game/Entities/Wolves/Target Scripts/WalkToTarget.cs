@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,11 @@ public class WalkToTarget : MonoBehaviour
         agent.updatePosition = false;
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+    }
+
+    private void OnEnable()
+    {
+        agent?.ResetPath();
     }
 
     private void FixedUpdate() {

@@ -36,6 +36,11 @@ public class RedWalkToTarget : MonoBehaviour
         agent.updateUpAxis = false;
     }
 
+    private void OnEnable()
+    {
+        agent?.ResetPath();
+    }
+    
     private void Update() {
         if (closestTarget.closestPlayer == null) return;
 

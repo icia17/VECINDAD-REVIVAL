@@ -151,7 +151,6 @@ public class WaveManager : MonoBehaviour
                         WolfLifeController lifeController = wolfInstance.GetComponent<WolfLifeController>();
                         if (lifeController != null)
                         {
-                            
                             lifeController.poolableType = wolfToSpawn;
 
                             lifeController.InitializeWolf();

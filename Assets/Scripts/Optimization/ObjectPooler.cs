@@ -41,7 +41,6 @@ public class ObjectPooler : MonoBehaviour
             Debug.LogWarning("Pool para el tipo " + type.name + " no existe.");
             return null;
         }
-
         
         if (poolDictionary[type].Count == 0)
         {
@@ -57,17 +56,13 @@ public class ObjectPooler : MonoBehaviour
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
-
         
-
         return objectToSpawn;
     }
 
     
     public void ReturnToPool(PoolableObjectSO type, GameObject objectToReturn)
     {
-       
-
         objectToReturn.SetActive(false);
         poolDictionary[type].Enqueue(objectToReturn);
     }

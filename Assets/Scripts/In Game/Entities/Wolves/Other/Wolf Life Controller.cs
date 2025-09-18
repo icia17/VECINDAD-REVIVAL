@@ -16,7 +16,6 @@ public class WolfLifeController : MonoBehaviour
 
     [HideInInspector]
     public bool isDead = false;
-
     
     [HideInInspector]
     public PoolableObjectSO poolableType;
@@ -37,7 +36,6 @@ public class WolfLifeController : MonoBehaviour
     {
         currentWolfLife = maxWolfLife;
         isDead = false;
-        
     }
 
     public void TakeDamage(float damage)
@@ -67,7 +65,6 @@ public class WolfLifeController : MonoBehaviour
     
     public void PostMortem()
     {
-        
         ObjectPooler.Instance.ReturnToPool(poolableType, this.gameObject);
     }
 }
