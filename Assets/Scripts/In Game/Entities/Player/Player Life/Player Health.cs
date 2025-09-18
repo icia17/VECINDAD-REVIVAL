@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class PlayerHealth : MonoBehaviour
 {
     ParticleSystem partSys;
+    private ParticleCollision particleCollision;
     PlayerList playerList;
     ChosenPlayerChanger chosenPlayerChanger;
     Rigidbody2D rb;
@@ -41,7 +42,8 @@ public class PlayerHealth : MonoBehaviour
     }
 
     private void Start() {
-        partSys = GetComponent<ParticleSystem>();   
+        partSys = GetComponent<ParticleSystem>();
+        particleCollision = GetComponent<ParticleCollision>();
         playerList = GetComponent<PlayerList>(); 
         chosenPlayerChanger = GetComponentInParent<ChosenPlayerChanger>();
         animator = GetComponent<Animator>();
@@ -56,6 +58,7 @@ public class PlayerHealth : MonoBehaviour
         audioSource.PlayOneShot(damagedSFX);
         
         partSys.Play();
+        particleCollision.BeginSplat();
 
         health -= damage;
         if (health <= 0 && alive)

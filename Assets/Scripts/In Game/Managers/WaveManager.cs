@@ -143,7 +143,9 @@ public class WaveManager : MonoBehaviour
 
                     PoolableObjectSO wolfToSpawn = wolfTypes[i];
                     GameObject wolfInstance = ObjectPooler.Instance.SpawnFromPool(wolfToSpawn, chosenSpawn, Quaternion.identity);
-
+                    
+                    Debug.Log("SPAWNING A WOLF!");
+                    
                     if (wolfInstance != null)
                     {
                         wolfInstance.transform.SetParent(wolfHolder);

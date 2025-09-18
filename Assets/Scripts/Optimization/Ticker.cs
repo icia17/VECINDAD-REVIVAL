@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ticker : MonoBehaviour
@@ -11,16 +9,19 @@ public class Ticker : MonoBehaviour
 
     public static Action OnTickAction;
 
-    private void Update() {
-        _tickerTimer += Time.deltaTime;
+    private void FixedUpdate() 
+    {
+        _tickerTimer += Time.fixedDeltaTime;
 
-        if (_tickerTimer >= tickTime) {
+        while (_tickerTimer >= tickTime) 
+        {
             _tickerTimer -= tickTime;
             TickEvent();
         }
     }
 
-    private void TickEvent() {
+    private void TickEvent() 
+    {
         OnTickAction?.Invoke();
     }
 }

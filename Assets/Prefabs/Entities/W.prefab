@@ -5274,11 +5274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fa246b3a653353499c04487046aff6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  splatPrefab: {fileID: 7623871242043538097, guid: 8c8f5a835f53b1c40a3dadfe99eaac32, type: 3}
-  audioSource: {fileID: 0}
-  sounds: []
-  SoundCapResetSpeed: 0.55
-  MaxSounds: 3
+  particleColConfig: {fileID: 11400000, guid: 2e64ad04d5412cf418861084fec9d97d, type: 2}
 --- !u!195 &8438177132003813826
 NavMeshAgent:
   m_ObjectHideFlags: 0

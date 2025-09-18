@@ -33,6 +33,7 @@ public class BulletStatistics : MonoBehaviour
     private Animator animator;
     private PlayerHealth shooter;
     private AudioSource audioSource;
+    private ParticleCollision particleCollision;
 
     private bool hasExploded = false;
 
@@ -53,7 +54,8 @@ public class BulletStatistics : MonoBehaviour
         particleSys = GetComponent<ParticleSystem>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
-
+        particleCollision = GetComponent<ParticleCollision>();
+        
         rb.velocity = transform.up * bulletSpeed;
 
         if (!canExplode) { return; }
@@ -88,6 +90,9 @@ public class BulletStatistics : MonoBehaviour
         
         circleCol.enabled = false;
         
+        var collision = particleSys.collision;
+        collision.enabled = false;
+        
         rb.constraints = RigidbodyConstraints2D.FreezePosition;
         
         audioSource.PlayOneShot(audioClips[0]);
@@ -103,7 +108,7 @@ public class BulletStatistics : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (circleCol == null) { return; }
-
+        
         circleCol.enabled = false;
 
         rb.constraints = RigidbodyConstraints2D.FreezePosition;
@@ -128,6 +133,7 @@ public class BulletStatistics : MonoBehaviour
         shape.rotation = Vector3.forward * 44f;
 
         particleSys.Play();
+        particleCollision.BeginSplat();
 
         spriteRenderer.enabled = false;
     }

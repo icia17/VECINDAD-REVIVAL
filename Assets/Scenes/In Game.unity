@@ -2548,7 +2548,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000022888184}
+  m_AnchoredPosition: {x: 0, y: 0.000019073486}
   m_SizeDelta: {x: 0, y: 53.833}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &194494983
@@ -4002,7 +4002,7 @@ GameObject:
   - component: {fileID: 306353717}
   m_Layer: 0
   m_Name: Splat Holder
-  m_TagString: Untagged
+  m_TagString: SplatHolder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -142459,6 +142459,7 @@ GameObject:
   - component: {fileID: 1854410661}
   - component: {fileID: 1854410662}
   - component: {fileID: 1854410663}
+  - component: {fileID: 1854410665}
   - component: {fileID: 1854410664}
   m_Layer: 0
   m_Name: Game Manager
@@ -142550,10 +142551,10 @@ MonoBehaviour:
   - {fileID: 598119295}
   - {fileID: 1089405976}
   wolfHolder: {fileID: 283898460}
-  wolves:
-  - {fileID: 3022378341253169298, guid: 62968f7cddb14564fbfe1ce37281542e, type: 3}
-  - {fileID: 5958612038239487423, guid: bf0f78234a9218a4995bd220129bcb8a, type: 3}
-  - {fileID: 7064027645856118006, guid: 6376e772885f92b49a46a99f203b4393, type: 3}
+  wolfTypes:
+  - {fileID: 11400000, guid: a3ca0d21edb29c34787bad36fc75b7df, type: 2}
+  - {fileID: 11400000, guid: 10c6014aa6d19ef42ab40ad92be3dcea, type: 2}
+  - {fileID: 11400000, guid: 42adf754173018b4295487ca34c75af9, type: 2}
   wolfAmount: 15
   maxAmount: 5
   percent: 010000000a00000032000000
@@ -142581,6 +142582,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tickTime: 0.2
+--- !u!114 &1854410665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854410659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d3861552b5f804089ac84ef6ccacf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolsToCreate:
+  - {fileID: 11400000, guid: a3ca0d21edb29c34787bad36fc75b7df, type: 2}
+  - {fileID: 11400000, guid: 42adf754173018b4295487ca34c75af9, type: 2}
+  - {fileID: 11400000, guid: 10c6014aa6d19ef42ab40ad92be3dcea, type: 2}
 --- !u!1 &1856097443
 GameObject:
   m_ObjectHideFlags: 0
@@ -142821,8 +142838,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1834825987}
   m_HandleRect: {fileID: 1834825986}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.8164139
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

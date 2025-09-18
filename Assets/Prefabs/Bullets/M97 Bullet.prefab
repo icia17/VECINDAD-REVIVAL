@@ -17,9 +17,9 @@ GameObject:
   - component: {fileID: 5461340194107118362}
   - component: {fileID: 4791941325874634926}
   - component: {fileID: 5637016108631848851}
-  - component: {fileID: 4256246240367447561}
   - component: {fileID: 8797331047643775940}
   - component: {fileID: 2840636016247224587}
+  - component: {fileID: 1927694605950655755}
   m_Layer: 8
   m_Name: M97 Bullet
   m_TagString: Untagged
@@ -5159,21 +5159,6 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!114 &4256246240367447561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9206065028882264713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68663ed1b77b08e4d9b3f9e716a0f3e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  splatPrefab: {fileID: 7623871242043538097, guid: 8c8f5a835f53b1c40a3dadfe99eaac32, type: 3}
-  SoundCapResetSpeed: 0.55
-  MaxSounds: 3
 --- !u!114 &8797331047643775940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5272,3 +5257,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1927694605950655755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9206065028882264713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa246b3a653353499c04487046aff6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleColConfig: {fileID: 11400000, guid: 2e64ad04d5412cf418861084fec9d97d, type: 2}

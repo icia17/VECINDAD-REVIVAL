@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 408458423198846646}
   - component: {fileID: 2234205142575762850}
   - component: {fileID: 5739841235951551648}
-  - component: {fileID: -8082886445476799919}
   - component: {fileID: 9066991243414518704}
   - component: {fileID: 7558472465268948694}
+  - component: {fileID: 8358209487979051114}
   m_Layer: 8
   m_Name: Ak47 Bullet
   m_TagString: Untagged
@@ -4972,21 +4972,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-8082886445476799919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5023953399349162682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68663ed1b77b08e4d9b3f9e716a0f3e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  splatPrefab: {fileID: 7623871242043538097, guid: 8c8f5a835f53b1c40a3dadfe99eaac32, type: 3}
-  SoundCapResetSpeed: 0.55
-  MaxSounds: 3
 --- !u!114 &9066991243414518704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5085,3 +5070,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8358209487979051114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023953399349162682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa246b3a653353499c04487046aff6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleColConfig: {fileID: 11400000, guid: 2e64ad04d5412cf418861084fec9d97d, type: 2}

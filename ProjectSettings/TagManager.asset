@@ -13,6 +13,7 @@ TagManager:
   - Placer
   - Turret
   - Throwaway
+  - SplatHolder
   layers:
   - Default
   - TransparentFX
