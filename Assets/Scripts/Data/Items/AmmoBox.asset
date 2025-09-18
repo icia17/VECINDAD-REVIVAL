@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AmmoBox
   m_EditorClassIdentifier: 
   itemType: 2
-  itemSprite: {fileID: 21300000, guid: 7e43d065caf8c7c4392fcf276a965845, type: 3}
+  itemSprite: {fileID: 21300000, guid: b09a2c74942ac49489eda4bcbee7b50d, type: 3}
   itemName: "Caja de munici\xF3n"
   itemPrice: 2750
   wearSFX: {fileID: 8300000, guid: 77dc25def18079448b3a485d2c585900, type: 3}
