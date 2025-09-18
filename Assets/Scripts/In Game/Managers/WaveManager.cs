@@ -1,3 +1,5 @@
+
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,21 +14,21 @@ public class WaveManager : MonoBehaviour
     [SerializeField] List<Transform> spawn;
     [SerializeField] Transform wolfHolder;
 
-    [Header("Wolf Types")]
-    [SerializeField] List<GameObject> wolves;
+    [Header("Wolf Types (Usando ScriptableObjects)")]
+    [SerializeField] List<PoolableObjectSO> wolfTypes; // <--- CAMBIO PRINCIPAL
 
     [Header("Wave Specific Wolf Amount")]
     [SerializeField] int wolfAmount = 15;
-    
+
     [Header("Max Wolves Present at Once")]
     [SerializeField] int maxAmount = 5;
 
     [Header("Wave Specific Wolf 1/X Spawn Chance")]
     [SerializeField] List<int> percent;
-    
+
     [Header("Timer Countdown")]
     [SerializeField] float timerCD;
-    
+
     [Header("Current State Text Object")]
     [SerializeField] TextMeshProUGUI stateObject;
 
@@ -48,20 +50,29 @@ public class WaveManager : MonoBehaviour
     int wolfCount;
     int wolvesToSpawn;
 
-    private void Start() {
+    private void Start()
+    {
         GameManager.State = GameState.Timer;
-
         baseTimerCD = timerCD;
         wolvesToSpawn = wolfAmount;
         wolvesLeft = wolfAmount;
-
         wave = 0;
     }
 
-    private void Update() {
-        wolfCount = wolfHolder.childCount;
+    private void Update()
+    {
+       
+        wolfCount = 0;
+        foreach (Transform child in wolfHolder)
+        {
+            if (child.gameObject.activeSelf)
+            {
+                wolfCount++;
+            }
+        }
 
-        switch (GameManager.State) {
+        switch (GameManager.State)
+        {
             case GameState.Timer:
                 Timer();
                 break;
@@ -74,29 +85,27 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    private void Timer() {
+    private void Timer()
+    {
         timerCD -= Time.deltaTime;
-        
         stateObject.text = "Intermisión: " + Mathf.RoundToInt(timerCD) + "s";
-        
-        if (Input.GetMouseButtonDown(1)) {
+
+        if (Input.GetMouseButtonDown(1))
+        {
             timerCD = 0;
         }
 
-        if (timerCD <= 0) {
+        if (timerCD <= 0)
+        {
             tutorial.SetActive(false);
-
-            // Wave Start Animation goes here!
             wave++;
             wolvesToSpawn = wolfAmount;
-
             GameManager.State = GameState.Wave;
-
             timerCD = baseTimerCD;
-            
             GameManager.inStore = false;
-            
-            if (buildStoreParent.activeSelf || weaponStoreParent.activeSelf || meleeStoreParent.activeSelf) {
+
+            if (buildStoreParent.activeSelf || weaponStoreParent.activeSelf || meleeStoreParent.activeSelf)
+            {
                 meleeStoreParent.SetActive(false);
                 weaponStoreParent.SetActive(false);
                 buildStoreParent.SetActive(false);
@@ -107,52 +116,64 @@ public class WaveManager : MonoBehaviour
             weaponStoreButton.SetActive(false);
             buildStoreButton.SetActive(false);
 
-            if (!AudioManager.Instance.musicSource.isPlaying) {
-                string index = Random.Range(0,2).ToString();
-
+            if (!AudioManager.Instance.musicSource.isPlaying)
+            {
+                string index = Random.Range(0, 2).ToString();
                 AudioManager.Instance.PlayMusic(index);
             }
 
             AudioManager.Instance.audioMixer.SetFloat("lowpass", 5000);
-
             lights.Play("Off");
-            return;
         }
     }
 
-    private void Wave() {
+    private void Wave()
+    {
         stateObject.text = "Oleada " + wave;
-        
-        Vector2 chosenSpawn = spawn[Random.Range(0,spawn.Count)].transform.position;
 
-        if (wolfCount <= maxAmount) {
+        Vector2 chosenSpawn = spawn[Random.Range(0, spawn.Count)].transform.position;
 
-            for (int i = 0; i < wolves.Count; i++) {
-
-                if (Random.Range(1, percent[i]) == 1 && wolvesToSpawn > 0) {
+        if (wolfCount < maxAmount && wolvesToSpawn > 0)
+        {
+            for (int i = 0; i < wolfTypes.Count; i++)
+            {
+                if (Random.Range(1, percent[i] + 1) == 1 && wolvesToSpawn > 0)
+                {
                     wolvesToSpawn--;
-                    Instantiate(wolves[i], chosenSpawn, Quaternion.identity, wolfHolder);
+
+                    PoolableObjectSO wolfToSpawn = wolfTypes[i];
+                    GameObject wolfInstance = ObjectPooler.Instance.SpawnFromPool(wolfToSpawn, chosenSpawn, Quaternion.identity);
+
+                    if (wolfInstance != null)
+                    {
+                        wolfInstance.transform.SetParent(wolfHolder);
+
+                        WolfLifeController lifeController = wolfInstance.GetComponent<WolfLifeController>();
+                        if (lifeController != null)
+                        {
+                            
+                            lifeController.poolableType = wolfToSpawn;
+
+                            lifeController.InitializeWolf();
+                        }
+                    }
                 }
-
             }
-
         }
 
-        if (wolvesLeft < 1) {
+        if (wolvesLeft < 1)
+        {
             NextWaveBuffs();
-
             GameManager.State = GameState.Timer;
-
             meleeStoreButton.SetActive(true);
             weaponStoreButton.SetActive(true);
             buildStoreButton.SetActive(true);
-
             DestroyEmptyTurrets();
 
-            BuildsStoreManager.stock = 2;
-                        
-            AudioManager.Instance.audioMixer.SetFloat("lowpass", 500);
+            // Asumiendo que BuildsStoreManager existe en el proyecto
+            // BuildsStoreManager.stock = 2;
 
+            AudioManager.Instance.audioMixer.SetFloat("lowpass", 500);
             lights.Play("On");
         }
     }
@@ -161,8 +182,10 @@ public class WaveManager : MonoBehaviour
     {
         TurretRangedController[] turrets = FindObjectsOfType<TurretRangedController>();
 
-        foreach(var turret in turrets) {
-            if (turret.empty) {
+        foreach (var turret in turrets)
+        {
+            if (turret.empty)
+            {
                 Destroy(turret.transform.parent.gameObject);
             }
         }
@@ -173,18 +196,20 @@ public class WaveManager : MonoBehaviour
         wolfAmount += 1;
         wolvesLeft = wolfAmount;
 
-        for(int i = 0; i < percent.Count; i++) {
-            if (percent[i] == 1) { continue; } 
-
+        for (int i = 0; i < percent.Count; i++)
+        {
+            if (percent[i] == 1) { continue; }
             percent[i] -= 1;
         }
 
-        if ((wave + 1) % 3 == 0) {
+        if ((wave + 1) % 3 == 0)
+        {
             maxAmount++;
         }
     }
 
-    private void Lose() {
+    private void Lose()
+    {
         AudioManager.Instance.musicSource.volume = 0.5f;
     }
 }

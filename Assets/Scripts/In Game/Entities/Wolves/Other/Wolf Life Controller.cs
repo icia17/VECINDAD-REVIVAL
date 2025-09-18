@@ -1,13 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class WolfLifeController : MonoBehaviour
 {
+    
     [Header("Wolf life points")]
-    public float wolfLife;
+    public float maxWolfLife;
+    public float currentWolfLife;
 
     [Header("Wolf full body animator")]
     public Animator animator;
@@ -15,42 +14,60 @@ public class WolfLifeController : MonoBehaviour
     [Header("Death unity event")]
     public UnityEvent OnDeath;
 
-    [HideInInspector] 
+    [HideInInspector]
     public bool isDead = false;
+
+    
+    [HideInInspector]
+    public PoolableObjectSO poolableType;
 
     ParticleSystem particles;
 
-    private void Start() {
-        particles = GetComponent<ParticleSystem>();
-    }
-
-    public void TakeDamage(float damage) {
-        wolfLife -= damage;
-
-        animator.Play("Damaged"); 
-    }
-
-    public void TakeSplatDamage(float damage) {
-        wolfLife -= damage;
-
-        particles.Play();
-        
-        animator.Play("Damaged"); 
-    }
     
-    private void Update() {
-        if (wolfLife <= 0 && !isDead) {
-            isDead = true;
-
-            WaveManager.wolvesLeft--;
-            
-            OnDeath?.Invoke();
-
-            animator.Play("Death");  
+    private void Awake()
+    {
+        particles = GetComponent<ParticleSystem>();
+        if (maxWolfLife <= 0)
+        {
+            maxWolfLife = 100;
         }
     }
 
-    public void PostMortem() {
-        Destroy(gameObject);
+    public void InitializeWolf()
+    {
+        currentWolfLife = maxWolfLife;
+        isDead = false;
+        
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (isDead) return;
+        currentWolfLife -= damage;
+        animator.Play("Damaged");
+    }
+
+    private void Update()
+    {
+        if (currentWolfLife <= 0 && !isDead)
+        {
+            isDead = true;
+            WaveManager.wolvesLeft--;
+            OnDeath?.Invoke();
+            animator.Play("Death");
+        }
+    }
+    public void TakeSplatDamage(float damage)
+    {
+        currentWolfLife -= damage;
+        particles.Play();
+        animator.Play("Damaged");
+    }
+
+    
+    public void PostMortem()
+    {
+        
+        ObjectPooler.Instance.ReturnToPool(poolableType, this.gameObject);
     }
 }

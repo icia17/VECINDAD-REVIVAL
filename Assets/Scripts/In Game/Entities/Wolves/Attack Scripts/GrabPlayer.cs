@@ -103,7 +103,7 @@ public class GrabPlayer : MonoBehaviour
                 playerHealth.TakeDamage(playerHealth.health);
             }
             
-            wolfLifeController.wolfLife = 0.0f;
+            wolfLifeController.currentWolfLife = 0.0f;
         }
     }
 
