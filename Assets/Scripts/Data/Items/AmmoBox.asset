@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 7e43d065caf8c7c4392fcf276a965845, type: 3}
   itemName: "Caja de munici\xF3n"
   itemPrice: 2750
-  wearSFX: {fileID: 8300000, guid: 3664b4b753001fe4bb1a0f76fe3be026, type: 3}
+  wearSFX: {fileID: 8300000, guid: 77dc25def18079448b3a485d2c585900, type: 3}
   bullet: {fileID: 0}
   shootPos: {x: 0, y: 0, z: 0}
   screenShake: {x: 0, y: 0, z: 0}
@@ -44,6 +44,7 @@ MonoBehaviour:
   reach: 0
   uses: 0
   swung: 0
+  swingSFX: {fileID: 0}
   spawn: {fileID: 236553180348755875, guid: 583df9c3cbdbab94c851f90d88d13d0f, type: 3}
   placerSprite: {fileID: 21300000, guid: 7e43d065caf8c7c4392fcf276a965845, type: 3}
   radius: 3.5

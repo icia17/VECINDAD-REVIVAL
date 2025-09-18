@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 4cbfe03a4110a484ab8bf2ed92d33c8c, type: 3}
   itemName: Torreta
   itemPrice: 3500
-  wearSFX: {fileID: 8300000, guid: 3664b4b753001fe4bb1a0f76fe3be026, type: 3}
+  wearSFX: {fileID: 8300000, guid: 77dc25def18079448b3a485d2c585900, type: 3}
   bullet: {fileID: 0}
   shootPos: {x: 0, y: 0, z: 0}
   screenShake: {x: 0, y: 0, z: 0}
@@ -44,6 +44,7 @@ MonoBehaviour:
   reach: 0
   uses: 0
   swung: 0
+  swingSFX: {fileID: 0}
   spawn: {fileID: 4534583462908999175, guid: b553e36ab8160ec419dc7d373f7f7ee9, type: 3}
   placerSprite: {fileID: 21300000, guid: 4cbfe03a4110a484ab8bf2ed92d33c8c, type: 3}
   radius: 2.5

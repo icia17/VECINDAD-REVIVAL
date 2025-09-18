@@ -10318,12 +10318,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSounds:
   - name: 0
-    clip: {fileID: 8300000, guid: 4d1527b117ceb3b45a7c43c44a110dc1, type: 3}
+    clip: {fileID: 8300000, guid: 1686f72ddfc94e742a8489d1b2cf2d10, type: 3}
   sfxSounds:
   - name: Kaching
-    clip: {fileID: 8300000, guid: 57310be7d1dc4e443b467d70ceddc5d5, type: 3}
+    clip: {fileID: 8300000, guid: c4893f6fbcd66bb4ea594b6e2b436efe, type: 3}
   - name: Click
-    clip: {fileID: 8300000, guid: fa59a0cca0cb6bc4ea4a1220d73b08a5, type: 3}
+    clip: {fileID: 8300000, guid: d8c9393fb8a585843aa09c8caf3019d7, type: 3}
   musicSource: {fileID: 1329011283}
   sfxSource: {fileID: 658909780}
   audioMixer: {fileID: 24100000, guid: cdb5b8e607904884a8c1cd68faca96c9, type: 2}

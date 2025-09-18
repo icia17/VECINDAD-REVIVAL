@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: c54d982c3a38c524a999d3107f492df8, type: 3}
   itemName: M-97
   itemPrice: 20000
-  wearSFX: {fileID: 8300000, guid: 9ebc158963851a64b9723a373592334d, type: 3}
+  wearSFX: {fileID: 8300000, guid: ddbc4aeb670913d41b08fef5293638f2, type: 3}
   bullet: {fileID: 9206065028882264713, guid: f61feda2291f47e4698bca87f4f7f39c, type: 3}
   shootPos: {x: 0.62, y: 0, z: 0}
   screenShake: {x: 0, y: -0.5, z: 0}
@@ -31,8 +31,8 @@ MonoBehaviour:
   canFire: 0
   reloading: 0
   singleShot: 1
-  reloadSFX: {fileID: 8300000, guid: 0d185d421d3829a43b0a329e6acdb784, type: 3}
-  shootSFX: {fileID: 8300000, guid: 0437f86f2713fda45b089756fe81bea9, type: 3}
+  reloadSFX: {fileID: 8300000, guid: 83df4c06a6205854285a63890452ae31, type: 3}
+  shootSFX: {fileID: 8300000, guid: 29ac96a8f3aef0c4399d5ae1ea09292b, type: 3}
   fireRateCost: 0
   magSizeCost: 0
   maxCapacityCost: 4500
@@ -44,6 +44,7 @@ MonoBehaviour:
   reach: 0
   uses: 0
   swung: 0
+  swingSFX: {fileID: 0}
   spawn: {fileID: 0}
   placerSprite: {fileID: 0}
   radius: 0

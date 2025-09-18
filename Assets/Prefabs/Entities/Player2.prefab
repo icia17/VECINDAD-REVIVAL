@@ -5335,8 +5335,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  damagedSFX: {fileID: 8300000, guid: eb1649883cba91b41a21c35f93eb53d9, type: 3}
+  damagedSFX: {fileID: 8300000, guid: ead3f9adbdbb25246864b0ca83fd0585, type: 3}
   bloodLust: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5487502342022408247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5367,8 +5370,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arm: {fileID: 5521810605367286021}
-  col: {fileID: 3775783217771377616}
-  grabbed: 0
   OnGrabbed:
     m_PersistentCalls:
       m_Calls: []

@@ -5272,7 +5272,6 @@ MonoBehaviour:
   attackRadius: 0.2
   damage: 5
   damageCD: 1
-  grabbed: 0
 --- !u!195 &8712609644246455630
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5380,7 +5379,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 3933217057862909914, guid: cdb5b8e607904884a8c1cd68faca96c9, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 994c9730e6d46b845911850e87932cd4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d2cfaef0140dd82439a492173bde1b88, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

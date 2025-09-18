@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usesLeft: 3
-  buildSFX: {fileID: 8300000, guid: f97ebba9cba2a624e82da589e80db4fe, type: 3}
+  buildSFX: {fileID: 8300000, guid: 8074a31fb6147e744a9c971b5da2a7f4, type: 3}
 --- !u!1 &4671845328749908957
 GameObject:
   m_ObjectHideFlags: 0
