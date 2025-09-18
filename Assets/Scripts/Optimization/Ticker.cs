@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Ticker : MonoBehaviour
 {
-    public static float tickTime = 0.2f;
+    [SerializeField] private float tickTime = 0.2f;
 
     private float _tickerTimer;
 
@@ -15,7 +15,7 @@ public class Ticker : MonoBehaviour
         _tickerTimer += Time.deltaTime;
 
         if (_tickerTimer >= tickTime) {
-            _tickerTimer = 0;
+            _tickerTimer -= tickTime;
             TickEvent();
         }
     }

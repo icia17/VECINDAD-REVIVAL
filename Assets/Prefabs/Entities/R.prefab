@@ -286,7 +286,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6462803224752795407}
-  - component: {fileID: 8506033226789354698}
   m_Layer: 7
   m_Name: Attack Radius
   m_TagString: Untagged
@@ -309,26 +308,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8626394537312289601}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8506033226789354698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6814243075394820067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2e34fa7461276142a1a2bcc9755fec7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layer:
-    serializedVersion: 2
-    m_Bits: 8
-  attackPos: {fileID: 6462803224752795407}
-  attackRadius: 0.2
-  damage: 5
-  damageCD: 1
-  grabbed: 0
 --- !u!1 &7064027645856118006
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,10 +322,11 @@ GameObject:
   - component: {fileID: 7081138801886533376}
   - component: {fileID: 8251121794787827379}
   - component: {fileID: 2277979009748769722}
+  - component: {fileID: 5551111034919664815}
   - component: {fileID: 856277050635592656}
   - component: {fileID: 2382895443779928700}
-  - component: {fileID: 6409065469061173572}
   - component: {fileID: 2110318669103701906}
+  - component: {fileID: 7730460916997215566}
   - component: {fileID: 8712609644246455630}
   - component: {fileID: -1815220552227737430}
   - component: {fileID: -1193138800776489169}
@@ -5209,24 +5189,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb4d9e6b8c51ac4e8aee1af350716ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wolfLife: 45
+  wolfHealth: 35
   animator: {fileID: 7081138801886533376}
   OnDeath:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6409065469061173572}
-        m_TargetAssemblyTypeName: WolfPrizeMoney, Assembly-CSharp
-        m_MethodName: OnDeath
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  isDead: 0
+      m_Calls: []
+--- !u!114 &5551111034919664815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7064027645856118006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8397f84c1c31d48ab630afcac12f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cashReward: 300
 --- !u!114 &856277050635592656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5256,19 +5236,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   invisible: 0
   closestPlayer: {fileID: 0}
---- !u!114 &6409065469061173572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7064027645856118006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d8397f84c1c31d48ab630afcac12f87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prizeMoney: 250
 --- !u!114 &2110318669103701906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5286,6 +5253,25 @@ MonoBehaviour:
   sounds: []
   SoundCapResetSpeed: 0.55
   MaxSounds: 3
+--- !u!114 &7730460916997215566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7064027645856118006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e34fa7461276142a1a2bcc9755fec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 8
+  attackPos: {fileID: 6462803224752795407}
+  attackRadius: 0.2
+  damage: 5
+  damageCD: 1
 --- !u!195 &8712609644246455630
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5393,7 +5379,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 3933217057862909914, guid: cdb5b8e607904884a8c1cd68faca96c9, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 994c9730e6d46b845911850e87932cd4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d2cfaef0140dd82439a492173bde1b88, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

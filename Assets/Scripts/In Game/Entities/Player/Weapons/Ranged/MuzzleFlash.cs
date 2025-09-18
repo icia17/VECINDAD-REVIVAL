@@ -5,11 +5,14 @@ using UnityEngine.Rendering.Universal;
 
 public class MuzzleFlash : MonoBehaviour
 {
-    Light2D muzzleFlash;
+    private Light2D muzzleFlash;
 
     void Awake()
     {
-        muzzleFlash = GetComponent<Light2D>();
+        if (!TryGetComponent(out muzzleFlash))
+        {
+            Debug.Log("Light2D Source not found!");
+        }
     }
 
     private void FixedUpdate() {

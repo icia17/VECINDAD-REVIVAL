@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resizeAmount: 0.1
-  splat: {fileID: 8300000, guid: be1557e3ac9b9554f9039cea00006080, type: 3}
+  splat: {fileID: 8300000, guid: 92b261f5056f7e645a914cb7d74ea469, type: 3}
 --- !u!114 &-6841113343452255304
 MonoBehaviour:
   m_ObjectHideFlags: 0

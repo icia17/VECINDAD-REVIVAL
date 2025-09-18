@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 774ad15f989640e479fbc7bae4ecf8bc, type: 3}
   itemName: Hacha
   itemPrice: 8000
-  wearSFX: {fileID: 8300000, guid: 336a60cc827c38a4c998eb75db246866, type: 3}
+  wearSFX: {fileID: 8300000, guid: 0e790741bae74334abe36191638f1278, type: 3}
   bullet: {fileID: 0}
   shootPos: {x: 0, y: 0, z: 0}
   screenShake: {x: 0, y: 0, z: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   reach: 0
   uses: 45
   swung: 0
-  swingSFX: {fileID: 8300000, guid: 10218ffba2b3dae468a3be6f3eaadb18, type: 3}
+  swingSFX: {fileID: 8300000, guid: 31dfb4e083c304f4882efba7d8718152, type: 3}
   spawn: {fileID: 0}
   placerSprite: {fileID: 0}
   radius: 0

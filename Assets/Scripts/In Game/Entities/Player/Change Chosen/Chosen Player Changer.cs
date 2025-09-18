@@ -52,7 +52,7 @@ public class ChosenPlayerChanger : MonoBehaviour
         {
             int nextIndex = (chosenIndex + 1) % players.Length;
 
-            if (!players[nextIndex].playerController.grabPlayer.grabbed) {
+            if (!players[nextIndex].playerController.grabPlayer.IsGrabbed()) {
                 players[chosenIndex].playerController.isChosen = false;
                 players[nextIndex].playerController.isChosen = true;
                 nextPlayer = players[nextIndex].playerController;

@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public bool changingPlayers = false;
-    [HideInInspector] public GrabPosition grabPlayer;
+    [HideInInspector] public GrabbablePlayer grabPlayer;
     [HideInInspector] public PlayerHealth playerHealth;
     [HideInInspector] public bool swinging = false;
 
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
         pauseMenuController = GameObject.Find("Pause Menu").gameObject.GetComponent<PauseMenuController>();    
-        grabPlayer = GetComponent<GrabPosition>();
+        grabPlayer = GetComponent<GrabbablePlayer>();
         meleeController = GetComponentInChildren<MeleeController>();
         rangedController = GetComponentInChildren<RangedController>();
         chosenPlayerChanger = GetComponentInParent<ChosenPlayerChanger>();
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
         Change();
 
-        if (grabPlayer.grabbed) { return; }
+        if (grabPlayer.IsGrabbed()) { return; }
         
         GatherInput();
         OnReload();
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Change() {
-        if (frameInput.Change || grabPlayer.grabbed) {
+        if (frameInput.Change || grabPlayer.IsGrabbed()) {
             StartCoroutine(chosenPlayerChanger.Change());
         }
     }

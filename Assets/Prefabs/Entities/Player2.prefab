@@ -5335,8 +5335,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  damagedSFX: {fileID: 8300000, guid: eb1649883cba91b41a21c35f93eb53d9, type: 3}
+  damagedSFX: {fileID: 8300000, guid: ead3f9adbdbb25246864b0ca83fd0585, type: 3}
   bloodLust: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5487502342022408247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5367,8 +5370,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arm: {fileID: 5521810605367286021}
-  col: {fileID: 3775783217771377616}
-  grabbed: 0
+  OnGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSquashed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!199 &4519202763528577157
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -5469,6 +5476,7 @@ MonoBehaviour:
   hands: {fileID: 388180562578760092}
   head: {fileID: 7247368030453725388}
   throwaway: {fileID: 5824865916532480912, guid: a6b9a321fdf4bc548a36aeaf58398f5e, type: 3}
+  muzzleFlash: {fileID: 0}
 --- !u!195 &8289375170280898976
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5721,6 +5729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationTime: 100
   removeDegrees: 1
+  isArm: 0
 --- !u!114 &3574606018224259827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5736,7 +5745,6 @@ MonoBehaviour:
   rotateTime: 100
   arm: {fileID: 5521810605367286021}
   hands: {fileID: 0}
-  ranged: {fileID: 0}
   show: 0
   armThisFrame: 0
 --- !u!1 &2479459492842604132
@@ -5938,6 +5946,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 7091364898383719552}
   playerHealth: {fileID: 8294069681454479810}
   audioSource: {fileID: 672899255543243125}
+  rotWolf: {fileID: 0}
+  cis: {fileID: 0}
 --- !u!114 &2884074162639994018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6102,6 +6112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationTime: 10
   removeDegrees: 1
+  isArm: 0
 --- !u!114 &9161580777971428825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6117,7 +6128,6 @@ MonoBehaviour:
   rotateTime: 10
   arm: {fileID: 5521810605367286021}
   hands: {fileID: 388180562578760092}
-  ranged: {fileID: 8280395188939653093}
   show: 1
   armThisFrame: 0
 --- !u!114 &1270418102429293471
@@ -6533,6 +6543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationTime: 50
   removeDegrees: 0
+  isArm: 0
 --- !u!1 &5420016040439896995
 GameObject:
   m_ObjectHideFlags: 0

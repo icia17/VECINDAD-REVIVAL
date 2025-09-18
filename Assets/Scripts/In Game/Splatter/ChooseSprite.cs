@@ -10,8 +10,10 @@ public class ChooseSprite : MonoBehaviour
 
     void Start()
     {
-        sprite = GetComponent<SpriteRenderer>();
-        int randomSprite = Random.Range(0,config.sprites.Length);
-        sprite.sprite = config.sprites[randomSprite];
+        if (TryGetComponent(out sprite))
+        {
+            int randomSprite = Random.Range(0,config.sprites.Length - 1);
+            sprite.sprite = config.sprites[randomSprite];
+        }
     }
 }

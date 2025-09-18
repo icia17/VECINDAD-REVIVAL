@@ -12,10 +12,11 @@ public class WalkToTarget : MonoBehaviour
     ClosestTarget closestTarget;
     NavMeshAgent agent;
     Vector3 posVelocity = Vector3.zero;
-    WolfLifeController wolfLife;
+
+    private bool stopWalking = false;
 
     private void Start() {
-        wolfLife = GetComponent<WolfLifeController>();
+        GetComponent<WolfHealthController>().OnDeath.AddListener(() => { stopWalking = true; });
         closestTarget = GetComponent<ClosestTarget>();
         agent = GetComponent<NavMeshAgent>();
         
@@ -30,7 +31,7 @@ public class WalkToTarget : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if (wolfLife.isDead) {
+        if (stopWalking) {
             animator.Play("Idle");
             return; 
         }

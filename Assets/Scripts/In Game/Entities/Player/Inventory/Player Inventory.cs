@@ -28,6 +28,14 @@ public class PlayerInventory : MonoBehaviour
     PlaceObject placeObject;
     AudioSource audioSource;
 
+    private void Awake()
+    {
+        if (TryGetComponent<GrabbablePlayer>(out var grabPosition))
+            grabPosition?.OnGrabbed.AddListener(Grabbed);
+        else
+            Debug.Log("Couldn't Find GrabPosition!");
+    }
+
     private void Start()
     {   
         rangedController = GetComponent<RangedController>();
@@ -73,8 +81,17 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    private void Grabbed()
+    {
+        if (selectedItem == null) return;
+        
+        selectedItem.reloading = false;
+        selectedItem.swung = false;
+    }
+    
     private void ChangeToWeapon() {
-        if (player.grabPlayer.grabbed || !player.playerHealth.alive) return;
+        Debug.Log($"{gameObject.name} - Change To Weapon!");
+        if (player.grabPlayer.IsGrabbed() || !player.playerHealth.alive) return;
 
         if (selectedItem != null) {
             if (selectedItem.totalAmmo + selectedItem.ammo > 0 || selectedItem.uses > 0) {
@@ -138,9 +155,10 @@ public class PlayerInventory : MonoBehaviour
     }
 
     private void ChangeToRanged(int index) {   
+        Debug.Log($"{gameObject.name} - Trying to change to ranged of index {index}");
         arm.SetActive(true);
 
-        muzzleFlash.ZeroIntensity();
+        muzzleFlash?.ZeroIntensity();
 
         rangedController.ChangeWeapon(inventory[index]);
     }
