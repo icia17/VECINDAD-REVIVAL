@@ -6,26 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="395fd1c1-312a-48c1-9a8b-c432c98f491c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.VECINDAD-REVIVAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.VECINDAD-REVIVAL/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/Black Wolf/Full Body/Animations/Death.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/Black Wolf/Full Body/Animations/Death.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/Black Wolf/Attack/Black Wolf Attack.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/Black Wolf/Attack/Black Wolf Attack.controller" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/Black Wolf/Full Body/Wolf Full Body.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/Black Wolf/Full Body/Wolf Full Body.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/Red Wolf/Full Body/Animations/Death.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/Red Wolf/Full Body/Animations/Death.anim" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/Red Wolf/Full Body/Red Full Body.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/Red Wolf/Full Body/Red Full Body.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/White Wolf/Full Body/Animations/Death.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/White Wolf/Full Body/Animations/Death.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/White Wolf/Attack/White Wolf Attack.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/White Wolf/Attack/White Wolf Attack.controller" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/White Wolf/Full Body/White Full Body.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animators/In Game/Wolves/White Wolf/Full Body/White Full Body.controller" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Materials/Glowy.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Glowy.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Entities/B.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Entities/B.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Entities/R.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Entities/R.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Entities/W.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Entities/W.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/In Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/In Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Items/AmmoBox.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Data/Items/AmmoBox.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Poolables/Wolves/Wolf_Blue_SO.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Data/Poolables/Wolves/Wolf_Blue_SO.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Poolables/Wolves/Wolf_Red_SO.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Data/Poolables/Wolves/Wolf_Red_SO.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Poolables/Wolves/Wolf_White_SO.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Data/Poolables/Wolves/Wolf_White_SO.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Other/Wolf Life Controller.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Other/Wolf Life Controller.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Other/WolfHealthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Other/WolfHealthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/WalkToTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/WalkToTarget.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Managers/WaveManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Managers/WaveManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/URP/URP Asset.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/URP/URP Asset.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

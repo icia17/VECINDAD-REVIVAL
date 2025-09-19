@@ -5205,6 +5205,7 @@ MonoBehaviour:
   - {fileID: 7264595431884086043}
   - {fileID: 2098744162406877848}
   - {fileID: 8715392741208162628}
+  lineRenderer: {fileID: 4745140590431701324}
   OnDeath:
     m_PersistentCalls:
       m_Calls: []

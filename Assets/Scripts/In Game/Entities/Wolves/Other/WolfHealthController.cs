@@ -16,6 +16,7 @@ public class WolfHealthController : MonoBehaviour
     [SerializeField] private Animator animator;
 
     [SerializeField] private List<SpriteRenderer> sprites;
+    [SerializeField] private LineRenderer lineRenderer;
     
     [HideInInspector]
     public UnityEvent OnDeath;
@@ -27,9 +28,14 @@ public class WolfHealthController : MonoBehaviour
     private bool isDead = false;
 
     private float maxWolfHealth;
-    
+
+    private readonly string idleAnim = "Idle";
     private readonly string deathAnim = "Death";
     private readonly string hurtAnim = "Damaged";
+
+    private Animator[] otherAnimators;
+    private BoxCollider2D collider;
+    private NavMeshAgent agent;
     
     private void Awake() 
     {
@@ -37,6 +43,10 @@ public class WolfHealthController : MonoBehaviour
             Logger.Log("ParticleSystem Not Found!");
 
         maxWolfHealth = wolfHealth;
+        
+        otherAnimators= GetComponentsInChildren<Animator>();
+        collider = GetComponentInChildren<BoxCollider2D>();
+        agent = GetComponent<NavMeshAgent>();
     }
     
     public void InitializeWolf(Vector3 spawnPosition)
@@ -46,7 +56,6 @@ public class WolfHealthController : MonoBehaviour
         
         transform.position = spawnPosition;
         
-        var agent = GetComponent<NavMeshAgent>();
         if (agent != null)
         {
             agent.Warp(spawnPosition); 
@@ -54,17 +63,16 @@ public class WolfHealthController : MonoBehaviour
             agent.nextPosition = spawnPosition;
         }
 
-        foreach (var sprite in sprites)
-        {
-            sprite.color = Color.white;
-        }
-
-        animator.enabled = true;
-        
-        var collider = GetComponentInChildren<BoxCollider2D>();
-        collider.enabled = true;
+        StartCoroutine(InitDelay());
     }
 
+    private IEnumerator InitDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.white;
+    }
+    
     public void TakeDamage(float damage, bool splat) 
     {
         if (isDead) return; 
@@ -97,11 +105,34 @@ public class WolfHealthController : MonoBehaviour
         WaveManager.Instance.OnWolfDeath();
         
         OnDeath?.Invoke();
+        
         animator.Play(deathAnim);
+    }
+
+    private void ResetAnim()
+    {
+        animator.Play(hurtAnim);
+        
+        foreach (var sprite in sprites)
+        {
+            sprite.color = Color.white;
+        }
+        
+        collider.enabled = true;
+        
+        foreach (var anim in otherAnimators)
+        {
+            anim.Rebind();
+            anim.Update(0f);
+        }
+
+        lineRenderer.startColor = Color.clear;
+        lineRenderer.endColor = Color.clear;
     }
     
     public void PostMortem()
     {
+        ResetAnim();
         ObjectPooler.Instance.ReturnToPool(poolableType, this.gameObject);
     }
 }

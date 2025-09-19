@@ -46,6 +46,6 @@ MonoBehaviour:
   swung: 0
   swingSFX: {fileID: 0}
   spawn: {fileID: 236553180348755875, guid: 583df9c3cbdbab94c851f90d88d13d0f, type: 3}
-  placerSprite: {fileID: 21300000, guid: 7e43d065caf8c7c4392fcf276a965845, type: 3}
+  placerSprite: {fileID: 21300000, guid: b09a2c74942ac49489eda4bcbee7b50d, type: 3}
   radius: 3.5
   buildSFX: AmmoPlace

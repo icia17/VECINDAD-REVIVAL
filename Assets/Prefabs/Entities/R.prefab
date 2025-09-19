@@ -5194,6 +5194,7 @@ MonoBehaviour:
   sprites:
   - {fileID: 4002787647338426842}
   - {fileID: 5592909701746709179}
+  lineRenderer: {fileID: 8186102522035265873}
   OnDeath:
     m_PersistentCalls:
       m_Calls: []

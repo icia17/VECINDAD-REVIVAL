@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Wolf_Blue_SO
   m_EditorClassIdentifier: 
   prefab: {fileID: 3022378341253169298, guid: 62968f7cddb14564fbfe1ce37281542e, type: 3}
-  poolSize: 3
+  poolSize: 15
