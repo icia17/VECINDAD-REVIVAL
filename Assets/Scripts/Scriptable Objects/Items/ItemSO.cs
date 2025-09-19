@@ -13,7 +13,7 @@ public class ItemSO : ScriptableObject
     public AudioClip wearSFX;
 
     [Header("Ranged Weapon Attributes")]
-    public GameObject bullet;
+    public PoolableObjectSO bullet;
     public Vector3 shootPos;
     public Vector3 screenShake;
     public float outerMuzzleLight;

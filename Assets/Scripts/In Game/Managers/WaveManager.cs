@@ -1,5 +1,3 @@
-
-
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -45,10 +43,20 @@ public class WaveManager : MonoBehaviour
     [SerializeField] GameObject hud;
     [SerializeField] GameObject tutorial;
 
+    [Header("Wave Tracking - Debug Info")]
+    [SerializeField] int wolvesAlive = 0;   
+    
     public static int wolvesLeft;
+    public static WaveManager Instance; 
+    
     float baseTimerCD;
     int wolfCount;
     int wolvesToSpawn;
+
+    private void Awake()
+    {
+        Instance = this; 
+    }
 
     private void Start()
     {
@@ -56,12 +64,12 @@ public class WaveManager : MonoBehaviour
         baseTimerCD = timerCD;
         wolvesToSpawn = wolfAmount;
         wolvesLeft = wolfAmount;
+        wolvesAlive = 0;
         wave = 0;
     }
 
     private void Update()
     {
-       
         wolfCount = 0;
         foreach (Transform child in wolfHolder)
         {
@@ -84,6 +92,38 @@ public class WaveManager : MonoBehaviour
                 break;
         }
     }
+    
+    public void OnWolfDeath()
+    {
+        wolvesAlive--;
+        wolvesLeft--;
+        
+        Debug.Log($"Wolf died! Wolves alive: {wolvesAlive}, Wolves to spawn: {wolvesToSpawn}");
+        
+        CheckWaveCompletion();
+    }
+
+    private void CheckWaveCompletion()
+    {
+        if (wolvesToSpawn <= 0 && wolvesAlive <= 0)
+        {
+            Debug.Log($"Wave {wave} completed! All wolves spawned and defeated.");
+            CompleteWave();
+        }
+    }
+
+    private void CompleteWave()
+    {
+        NextWaveBuffs();
+        GameManager.State = GameState.Timer;
+        meleeStoreButton.SetActive(true);
+        weaponStoreButton.SetActive(true);
+        buildStoreButton.SetActive(true);
+        DestroyEmptyTurrets();
+
+        AudioManager.Instance.audioMixer.SetFloat("lowpass", 500);
+        lights.Play("On");
+    }
 
     private void Timer()
     {
@@ -97,34 +137,45 @@ public class WaveManager : MonoBehaviour
 
         if (timerCD <= 0)
         {
-            tutorial.SetActive(false);
-            wave++;
-            wolvesToSpawn = wolfAmount;
-            GameManager.State = GameState.Wave;
-            timerCD = baseTimerCD;
-            GameManager.inStore = false;
-
-            if (buildStoreParent.activeSelf || weaponStoreParent.activeSelf || meleeStoreParent.activeSelf)
-            {
-                meleeStoreParent.SetActive(false);
-                weaponStoreParent.SetActive(false);
-                buildStoreParent.SetActive(false);
-                hud.SetActive(true);
-            }
-
-            meleeStoreButton.SetActive(false);
-            weaponStoreButton.SetActive(false);
-            buildStoreButton.SetActive(false);
-
-            if (!AudioManager.Instance.musicSource.isPlaying)
-            {
-                string index = Random.Range(0, 2).ToString();
-                AudioManager.Instance.PlayMusic(index);
-            }
-
-            AudioManager.Instance.audioMixer.SetFloat("lowpass", 5000);
-            lights.Play("Off");
+            StartNewWave();
         }
+    }
+
+    private void StartNewWave()
+    {
+        tutorial.SetActive(false);
+        wave++;
+        
+        wolvesToSpawn = wolfAmount;
+        wolvesAlive = 0;
+        wolvesLeft = wolfAmount; 
+        
+        GameManager.State = GameState.Wave;
+        timerCD = baseTimerCD;
+        GameManager.inStore = false;
+
+        if (buildStoreParent.activeSelf || weaponStoreParent.activeSelf || meleeStoreParent.activeSelf)
+        {
+            meleeStoreParent.SetActive(false);
+            weaponStoreParent.SetActive(false);
+            buildStoreParent.SetActive(false);
+            hud.SetActive(true);
+        }
+
+        meleeStoreButton.SetActive(false);
+        weaponStoreButton.SetActive(false);
+        buildStoreButton.SetActive(false);
+
+        if (!AudioManager.Instance.musicSource.isPlaying)
+        {
+            string index = Random.Range(0, 2).ToString();
+            AudioManager.Instance.PlayMusic(index);
+        }
+
+        AudioManager.Instance.audioMixer.SetFloat("lowpass", 5000);
+        lights.Play("Off");
+        
+        Debug.Log($"Starting wave {wave} - Wolves to spawn: {wolvesToSpawn}");
     }
 
     private void Wave()
@@ -140,11 +191,12 @@ public class WaveManager : MonoBehaviour
                 if (Random.Range(1, percent[i] + 1) == 1 && wolvesToSpawn > 0)
                 {
                     wolvesToSpawn--;
+                    wolvesAlive++; 
 
                     PoolableObjectSO wolfToSpawn = wolfTypes[i];
                     GameObject wolfInstance = ObjectPooler.Instance.SpawnFromPool(wolfToSpawn, chosenSpawn, Quaternion.identity);
                     
-                    Debug.Log("SPAWNING A WOLF!");
+                    Debug.Log($"SPAWNING A WOLF! Remaining to spawn: {wolvesToSpawn}, Currently alive: {wolvesAlive}");
                     
                     if (wolfInstance != null)
                     {
@@ -154,29 +206,20 @@ public class WaveManager : MonoBehaviour
                         if (lifeController != null)
                         {
                             lifeController.poolableType = wolfToSpawn;
-
                             lifeController.InitializeWolf();
+                        }
+                        
+                        WolfHealthController healthController = wolfInstance.GetComponent<WolfHealthController>();
+                        if (healthController != null)
+                        {
+                            healthController.InitializeWolf();
                         }
                     }
                 }
             }
         }
-
-        if (wolvesLeft < 1)
-        {
-            NextWaveBuffs();
-            GameManager.State = GameState.Timer;
-            meleeStoreButton.SetActive(true);
-            weaponStoreButton.SetActive(true);
-            buildStoreButton.SetActive(true);
-            DestroyEmptyTurrets();
-
-            // Asumiendo que BuildsStoreManager existe en el proyecto
-            // BuildsStoreManager.stock = 2;
-
-            AudioManager.Instance.audioMixer.SetFloat("lowpass", 500);
-            lights.Play("On");
-        }
+        
+        CheckWaveCompletion();
     }
 
     private void DestroyEmptyTurrets()

@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Ak-47
   itemPrice: 5000
   wearSFX: {fileID: 8300000, guid: 38d080cfe4765164e8d0536fff481768, type: 3}
-  bullet: {fileID: 5023953399349162682, guid: 87e2df82960059a4182454e1d97e5212, type: 3}
+  bullet: {fileID: 11400000, guid: 6de0ebc7e87bee84da6ed10963c0c5a0, type: 2}
   shootPos: {x: 1.4, y: 0, z: 0}
   screenShake: {x: 0, y: -0.08, z: 0}
   outerMuzzleLight: 5

@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoLight: {fileID: 2817480124168318512}
-  bullet: {fileID: 5023953399349162682, guid: 534479fc06f79074bac6471eacec8106, type: 3}
+  bullet: {fileID: 11400000, guid: 65ddb3ad5211dc44188160b58ab20e52, type: 2}
   shootPos: {fileID: 4600177572899966997}
   fullSprite: {fileID: 21300000, guid: 4cbfe03a4110a484ab8bf2ed92d33c8c, type: 3}
   emptySprite: {fileID: 21300000, guid: 9791d5350fc8c1642836fb87126829a7, type: 3}

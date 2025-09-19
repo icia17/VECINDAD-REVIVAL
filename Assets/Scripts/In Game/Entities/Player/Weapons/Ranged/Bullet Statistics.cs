@@ -25,8 +25,9 @@ public class BulletStatistics : MonoBehaviour
     
     [HideInInspector]
     public bool canSplatter = false;
-
-
+    
+    public PoolableObjectSO poolableBulletType { get; private set; }
+    
     private CircleCollider2D circleCol;
     private ParticleSystem particleSys;
     private SpriteRenderer spriteRenderer;
@@ -38,35 +39,97 @@ public class BulletStatistics : MonoBehaviour
     private bool hasExploded = false;
 
     private TurretRangedController turretRangedController;
-
-    public void Init(RangedController rangedController) {
-        this.rangedController = rangedController;
-        shooter = rangedController.playerHealth;
-    }
     
-    public void InitTurret(TurretRangedController turretRangedController) {
-        this.turretRangedController = turretRangedController;
-    }
+    private float originalBulletLifetime;
 
-    void Start()
-    {   
+    private void Awake()
+    {
         circleCol = GetComponent<CircleCollider2D>();
         particleSys = GetComponent<ParticleSystem>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         particleCollision = GetComponent<ParticleCollision>();
         
+        if (canExplode)
+        {
+            animator = GetComponent<Animator>();
+        }
+        
+        originalBulletLifetime = bulletLifetime;
+    }
+
+    public void Init(RangedController rangedController) {
+        this.rangedController = rangedController;
+        shooter = rangedController.playerHealth;
+        poolableBulletType = rangedController.currentWeapon.bullet;
+
+        ResetBullet();
+    }
+    
+    public void InitTurret(TurretRangedController turretRangedController) {
+        this.turretRangedController = turretRangedController;
+        poolableBulletType = turretRangedController.bullet;
+        
+        ResetBullet();
+    }
+    
+    public void ResetBullet()
+    {
+        hasExploded = false;
+        canSplatter = false;
+        
+        bulletLifetime = originalBulletLifetime;
+        
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.constraints = RigidbodyConstraints2D.None;
+        }
+        
+        if (circleCol != null)
+        {
+            circleCol.enabled = true;
+        }
+        
+        if (particleSys != null)
+        {
+            particleSys.Stop();
+            particleSys.Clear();
+            
+            var collision = particleSys.collision;
+            collision.enabled = true;
+            
+            var main = particleSys.main;
+            main.startColor = Color.white;
+        }
+        
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = true;
+        }
+        
+        if (animator != null && canExplode)
+        {
+            animator.Play("Default"); 
+        }
+        
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
+        
+        if (particleCollision != null)
+        {
+            particleCollision.EndSplat(); 
+        }
+        
         rb.velocity = transform.up * bulletSpeed;
-
-        if (!canExplode) { return; }
-
-        animator = GetComponent<Animator>();
     }
 
     private void Update() {
         Lifetime();
     }
-
 
     private void Lifetime() {
         if (hasExploded) { return; }
@@ -76,9 +139,9 @@ public class BulletStatistics : MonoBehaviour
         if (bulletLifetime <= 0) {
 
             if (rangedController != null) {
-                rangedController.DestroyBulletFromPool(this);
+                rangedController.ReleaseBulletFromPool(this);
             } else if (turretRangedController != null) {
-                turretRangedController.DestroyBulletFromPool(this);
+                turretRangedController.ReleaseBulletFromPool(this);
             } else {
                 Destroy(gameObject);
             }
@@ -140,7 +203,6 @@ public class BulletStatistics : MonoBehaviour
 
     private void DoDamage(Collider2D other)
     {
-        // Heal player on damaging wolf
         if (rangedController != null) {
             shooter.health += damage/10;
         }
@@ -160,6 +222,6 @@ public class BulletStatistics : MonoBehaviour
     }
 
     public void Destroy() {
-        Destroy(gameObject);
+        rangedController.ReleaseBulletFromPool(this);
     }
 }

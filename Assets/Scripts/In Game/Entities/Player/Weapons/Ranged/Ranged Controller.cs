@@ -28,16 +28,13 @@ public class RangedController : MonoBehaviour
 
     [Header("Cinemachine Impulse Source")]
     [SerializeField] CinemachineImpulseSource cis;
-
-    ObjectPool<BulletStatistics> bulletPool;
+    
     PlayerController player;
     PlayerLOSController los;
 
     private void Awake() {
         player = GetComponent<PlayerController>();
         los = GetComponent<PlayerLOSController>();
-
-        CreateBulletPool();
     }
     
     private void FixedUpdate() {
@@ -94,7 +91,13 @@ public class RangedController : MonoBehaviour
         StartCoroutine(OnReload());
     }
     
-    private void CreateBulletPool() {
+    private void SpawnBullet() {
+        GameObject bulletObj = ObjectPooler.Instance.SpawnFromPool(currentWeapon.bullet, shootPos.position, shootPos.rotation);
+        
+        BulletStatistics bulletStats = bulletObj.GetComponent<BulletStatistics>();
+        bulletStats.Init(this);
+        
+        /*
         bulletPool = new ObjectPool<BulletStatistics>(() => {
             GameObject bulletObj = Instantiate(currentWeapon.bullet, shootPos.position, shootPos.rotation);
             BulletStatistics bulletStats = bulletObj.GetComponent<BulletStatistics>();
@@ -110,14 +113,11 @@ public class RangedController : MonoBehaviour
         }, bullet => {
             Destroy(bullet.gameObject);
         });
+        */
     }
 
     public void ReleaseBulletFromPool(BulletStatistics bullet) {
-        bulletPool.Release(bullet);
-    }
-
-    public void DestroyBulletFromPool(BulletStatistics bullet) {
-        Destroy(bullet.gameObject);
+        ObjectPooler.Instance.ReturnToPool(bullet.poolableBulletType, bullet.gameObject);
     }
 
     public IEnumerator OnShoot() {
@@ -129,8 +129,7 @@ public class RangedController : MonoBehaviour
 
         currentWeapon.ammo--;
 
-        BulletStatistics bullet = bulletPool.Get();
-        bullet.Init(this);
+        SpawnBullet();
 
         ShootVFX();
 

@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 public class TurretRangedController : MonoBehaviour
 {
     public Light2D ammoLight;
-    public GameObject bullet;
+    public PoolableObjectSO bullet;
     public GameObject shootPos;
     public Sprite fullSprite;     
     public Sprite emptySprite;        
@@ -18,7 +18,6 @@ public class TurretRangedController : MonoBehaviour
     bool canShoot = true;
     Animator animator;
     TurretLOSController los;
-    ObjectPool<BulletStatistics> bulletPool;
     SpriteRenderer spriteRenderer;
     AudioSource audioSource;
 
@@ -33,35 +32,18 @@ public class TurretRangedController : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
 
-        CreateBulletPool();
-
         audioSource.PlayOneShot(buildSFX);
     }
 
-    private void CreateBulletPool() {
-        bulletPool = new ObjectPool<BulletStatistics>(() => {
-            GameObject bulletObj = Instantiate(bullet, shootPos.transform.position, shootPos.transform.rotation);
-            BulletStatistics bulletStats = bulletObj.GetComponent<BulletStatistics>();
-            bulletStats.InitTurret(this);
-            return bulletStats;
-        }, bullet => {
-            bullet.gameObject.SetActive(true);
-            bullet.transform.position = shootPos.transform.position;
-            bullet.transform.rotation = shootPos.transform.rotation;
-            bullet.rb.velocity = shootPos.transform.up * bullet.bulletSpeed; // Reset the velocity
-        }, bullet => {
-            bullet.gameObject.SetActive(false);
-        }, bullet => {
-            Destroy(bullet.gameObject);
-        });
+    private void SpawnBullet() {
+        GameObject bulletObj = ObjectPooler.Instance.SpawnFromPool(bullet, shootPos.transform.position, shootPos.transform.rotation);
+        
+        BulletStatistics bulletStats = bulletObj.GetComponent<BulletStatistics>();
+        bulletStats.InitTurret(this);
     }
 
     public void ReleaseBulletFromPool(BulletStatistics bullet) {
-        bulletPool.Release(bullet);
-    }
-
-    public void DestroyBulletFromPool(BulletStatistics bullet) {
-        Destroy(bullet.gameObject);
+        ObjectPooler.Instance.ReturnToPool(bullet.poolableBulletType, bullet.gameObject);
     }
 
     private void Update() {
@@ -87,8 +69,7 @@ public class TurretRangedController : MonoBehaviour
 
         animator.Play("Shoot");
 
-        BulletStatistics bullet = bulletPool.Get();
-        bullet.InitTurret(this);
+        SpawnBullet();
 
         yield return new WaitForSeconds(shotCD);
         canShoot = true;

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71b2ba96306b34f41b80240b8bcf86b1, type: 3}
-  m_Name: Wolf_Blue_SO
+  m_Name: PoolableAkBullet
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3022378341253169298, guid: 62968f7cddb14564fbfe1ce37281542e, type: 3}
-  poolSize: 3
+  prefab: {fileID: 5023953399349162682, guid: 87e2df82960059a4182454e1d97e5212, type: 3}
+  poolSize: 100

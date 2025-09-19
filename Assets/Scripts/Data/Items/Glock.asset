@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Glock-19
   itemPrice: 0
   wearSFX: {fileID: 8300000, guid: a39686d368fb1854f93a35a8b72dfb2c, type: 3}
-  bullet: {fileID: 3565320424436593703, guid: df8c9beebb76ddd45aa0d9ed05b8c08f, type: 3}
+  bullet: {fileID: 11400000, guid: 9524111690534594f9499616354b6587, type: 2}
   shootPos: {x: 0.74, y: 0, z: 0}
   screenShake: {x: 0, y: -0.1, z: 0}
   outerMuzzleLight: 3

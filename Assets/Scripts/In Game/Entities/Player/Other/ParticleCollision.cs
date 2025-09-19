@@ -17,17 +17,16 @@ public class ParticleCollision : MonoBehaviour
     private ParticleSystem particle;
     private Transform splatHolder;
     
-    // Cached values for optimization
     private Vector3 cachedPosition;
-    private float maxSplatDistanceSqr; // Squared distance for faster comparison
+    private float maxSplatDistanceSqr; 
     private SpriteRenderer splatRendererCache;
     
-    // Pre-allocated arrays to avoid garbage collection
     private ParticleSystem.Particle[] particleArray;
     private List<ParticleCollisionEvent> collisionEventsList = new List<ParticleCollisionEvent>();
     
     private float splatTimer = 0f;
     private bool isSplatting = false;
+    private Coroutine currentSplatCoroutine;
 
     private void Awake()
     {
@@ -54,13 +53,10 @@ public class ParticleCollision : MonoBehaviour
         particle = GetComponent<ParticleSystem>();
         splatHolder = GameObject.FindWithTag("SplatHolder").transform;
         
-        // Pre-allocate particle array
         particleArray = new ParticleSystem.Particle[particle.main.maxParticles];
         
-        // Cache squared distance for faster comparisons
         maxSplatDistanceSqr = maxSplatDistance * maxSplatDistance;
         
-        // Cache sprite renderer from prefab for faster access
         if (splatPrefab != null)
         {
             splatRendererCache = splatPrefab.GetComponent<SpriteRenderer>();
@@ -69,10 +65,28 @@ public class ParticleCollision : MonoBehaviour
 
     public void BeginSplat()
     {
-        if (!isSplatting) // Prevent multiple coroutines
+        if (particle == null || particleArray == null || isSplatting) 
         {
-            StartCoroutine(SplatTime());
+            return;
         }
+        
+        currentSplatCoroutine = StartCoroutine(SplatTime());
+    }
+
+    public void EndSplat()
+    {
+        if (currentSplatCoroutine != null)
+        {
+            StopCoroutine(currentSplatCoroutine);
+            currentSplatCoroutine = null;
+        }
+        
+        isSplatting = false;
+        splatTimer = 0f;
+        
+        collisionEventsList.Clear();
+        
+        cachedPosition = Vector3.zero;
     }
 
     private IEnumerator SplatTime()
@@ -110,6 +124,7 @@ public class ParticleCollision : MonoBehaviour
         }
     
         isSplatting = false;
+        currentSplatCoroutine = null;
     }
     
     private void CreateSplat(Vector3 position, bool inside)

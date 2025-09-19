@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Torreta
   itemPrice: 3500
   wearSFX: {fileID: 8300000, guid: 77dc25def18079448b3a485d2c585900, type: 3}
-  bullet: {fileID: 0}
+  bullet: {fileID: 11400000, guid: 65ddb3ad5211dc44188160b58ab20e52, type: 2}
   shootPos: {x: 0, y: 0, z: 0}
   screenShake: {x: 0, y: 0, z: 0}
   outerMuzzleLight: 0
