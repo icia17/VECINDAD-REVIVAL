@@ -17,17 +17,22 @@ public class HealthSlider : MonoBehaviour
         baseRed = currentRed;
     }
 
-    private void FixedUpdate() {
-        slider.value = Mathf.Lerp(slider.value, PlayerListLists.chosenPlayer.playerHealth.health, 10 * Time.deltaTime);
+    private void Update()
+    {
+        slider.value = Mathf.Lerp(
+            slider.value,
+            PlayerListLists.chosenPlayer.playerHealth.health,
+            10 * Time.deltaTime);
 
-        if (PlayerListLists.chosenPlayer.playerHealth.bloodLust) {
+        if (PlayerListLists.chosenPlayer.playerHealth.bloodLust)
+        {
             currentRed = Mathf.Lerp(currentRed, lerpRed, Time.deltaTime * 2.5f);
-
-            image.material.SetColor("_Color", new Color(currentRed,0,0));
-        } else {
+            image.material.SetColor("_Color", new Color(currentRed, 0, 0));
+        }
+        else
+        {
             currentRed = Mathf.Lerp(currentRed, baseRed, Time.deltaTime * 2.5f);
-
-            image.material.SetColor("_Color", new Color(currentRed,0,0));
+            image.material.SetColor("_Color", new Color(currentRed, 0, 0));
         }
     }
 }
