@@ -8,7 +8,7 @@ public class ParticleCollision : MonoBehaviour
 {
     [SerializeField] private ParticleCollisionConfigSO particleColConfig;
     
-    private GameObject splatPrefab;
+    private PoolableObjectSO poolableSplat;
     
     private float randomSplatChance = 0.01f;
     private float splatDetectionDuration = 0.1f;
@@ -19,7 +19,6 @@ public class ParticleCollision : MonoBehaviour
     
     private Vector3 cachedPosition;
     private float maxSplatDistanceSqr; 
-    private SpriteRenderer splatRendererCache;
     
     private ParticleSystem.Particle[] particleArray;
     private List<ParticleCollisionEvent> collisionEventsList = new List<ParticleCollisionEvent>();
@@ -32,17 +31,17 @@ public class ParticleCollision : MonoBehaviour
     {
         if (particleColConfig == null)
         {
-            Debug.LogError("particleColConfig is null! Assign it in the Inspector. - From: " + gameObject.name);
+            Logger.LogError("particleColConfig is null! Assign it in the Inspector. - From: " + gameObject.name);
             return;
         }
     
         if (particleColConfig.splatPrefab == null)
         {
-            Debug.LogError("splatPrefab in particleColConfig is null! Set it in the ScriptableObject asset. - From: " + gameObject.name);
+            Logger.LogError("splatPrefab in particleColConfig is null! Set it in the ScriptableObject asset. - From: " + gameObject.name);
             return;
         }
         
-        splatPrefab = particleColConfig.splatPrefab;
+        poolableSplat = particleColConfig.splatPrefab;
         randomSplatChance = particleColConfig.randomSplatChance;
         splatDetectionDuration = particleColConfig.splatDetectionDuration;
         maxSplatDistance = particleColConfig.maxSplatDistance;
@@ -56,11 +55,6 @@ public class ParticleCollision : MonoBehaviour
         particleArray = new ParticleSystem.Particle[particle.main.maxParticles];
         
         maxSplatDistanceSqr = maxSplatDistance * maxSplatDistance;
-        
-        if (splatPrefab != null)
-        {
-            splatRendererCache = splatPrefab.GetComponent<SpriteRenderer>();
-        }
     }
 
     public void BeginSplat()
@@ -129,14 +123,23 @@ public class ParticleCollision : MonoBehaviour
     
     private void CreateSplat(Vector3 position, bool inside)
     {
-        GameObject splat = Instantiate(splatPrefab, position, 
-            Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)), splatHolder);
+        GameObject splat = ObjectPooler.Instance.SpawnFromPool(poolableSplat, position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
 
+        var splatResizer = splat.GetComponent<DestroyAfter>();
+        
+        splatResizer.Init(poolableSplat);
+        
+        var splatRend = splat.GetComponent<SpriteRenderer>();
+        
         if (inside)
         {
-            var splatRend = splat.GetComponent<SpriteRenderer>();
             splatRend.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
             splatRend.sortingOrder = -999;
+        }
+        else
+        {
+            splatRend.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+            splatRend.sortingOrder = 15000;
         }
     }
 

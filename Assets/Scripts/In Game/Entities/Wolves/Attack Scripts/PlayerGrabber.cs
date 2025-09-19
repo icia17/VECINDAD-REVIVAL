@@ -28,10 +28,10 @@ public class PlayerGrabber : MonoBehaviour, IGrabber
         if (TryGetComponent<WolfHealthController>(out var wolfHealthController))
             wolfHealthController.OnDeath.AddListener(() => { Destroy(this); });
         else
-            Debug.Log("Wolf Health Controller Not Found!");
+            Logger.Log("Wolf Health Controller Not Found!");
         
         if (!TryGetComponent(out redWalkToTarget))
-            Debug.Log("Red Walk To Target Not Found!");
+            Logger.Log("Red Walk To Target Not Found!");
         
         baseDamageCD = damageCD;
 
@@ -111,7 +111,7 @@ public class PlayerGrabber : MonoBehaviour, IGrabber
             if (TryGetComponent<WolfHealthController>(out var wolfHealthController))
                 wolfHealthController.TakeMaxDamage();
             else
-                Debug.Log("Wolf Health Controller Not Found!");
+                Logger.Log("Wolf Health Controller Not Found!");
         }
     }
 }

@@ -33,7 +33,7 @@ public class PlayerInventory : MonoBehaviour
         if (TryGetComponent<GrabbablePlayer>(out var grabPosition))
             grabPosition?.OnGrabbed.AddListener(Grabbed);
         else
-            Debug.Log("Couldn't Find GrabPosition!");
+            Logger.Log("Couldn't Find GrabPosition!");
     }
 
     private void Start()

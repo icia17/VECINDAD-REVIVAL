@@ -25,7 +25,7 @@ public class GrabbablePlayer : MonoBehaviour, IGrabbable
         if (TryGetComponent(out _playerHealth))
             _playerHealth.OnDeath.AddListener(() => _grabber?.ForceRelease(false));
         else
-            Debug.Log("Player Health Not Found!");
+            Logger.Log("Player Health Not Found!");
     }
 
     public void Grab(IGrabber grabber)

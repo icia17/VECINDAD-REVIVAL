@@ -11,7 +11,7 @@ public class MuzzleFlash : MonoBehaviour
     {
         if (!TryGetComponent(out muzzleFlash))
         {
-            Debug.Log("Light2D Source not found!");
+            Logger.Log("Light2D Source not found!");
         }
     }
 

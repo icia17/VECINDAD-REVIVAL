@@ -60,7 +60,7 @@ public class RangedController : MonoBehaviour
 
         currentWeapon = weaponChosen;
 
-        Debug.Log("WP CHANGE");
+        Logger.Log("WP CHANGE");
 
         spriteRenderer.sprite = currentWeapon.itemSprite;
 

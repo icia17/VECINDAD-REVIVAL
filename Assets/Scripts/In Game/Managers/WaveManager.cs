@@ -98,7 +98,7 @@ public class WaveManager : MonoBehaviour
         wolvesAlive--;
         wolvesLeft--;
         
-        Debug.Log($"Wolf died! Wolves alive: {wolvesAlive}, Wolves to spawn: {wolvesToSpawn}");
+        Logger.Log($"Wolf died! Wolves alive: {wolvesAlive}, Wolves to spawn: {wolvesToSpawn}");
         
         CheckWaveCompletion();
     }
@@ -107,7 +107,7 @@ public class WaveManager : MonoBehaviour
     {
         if (wolvesToSpawn <= 0 && wolvesAlive <= 0)
         {
-            Debug.Log($"Wave {wave} completed! All wolves spawned and defeated.");
+            Logger.Log($"Wave {wave} completed! All wolves spawned and defeated.");
             CompleteWave();
         }
     }
@@ -175,7 +175,7 @@ public class WaveManager : MonoBehaviour
         AudioManager.Instance.audioMixer.SetFloat("lowpass", 5000);
         lights.Play("Off");
         
-        Debug.Log($"Starting wave {wave} - Wolves to spawn: {wolvesToSpawn}");
+        Logger.Log($"Starting wave {wave} - Wolves to spawn: {wolvesToSpawn}");
     }
 
     private void Wave()
@@ -196,7 +196,7 @@ public class WaveManager : MonoBehaviour
                     PoolableObjectSO wolfToSpawn = wolfTypes[i];
                     GameObject wolfInstance = ObjectPooler.Instance.SpawnFromPool(wolfToSpawn, chosenSpawn, Quaternion.identity);
                     
-                    Debug.Log($"SPAWNING A WOLF! Remaining to spawn: {wolvesToSpawn}, Currently alive: {wolvesAlive}");
+                    Logger.Log($"SPAWNING A WOLF! Remaining to spawn: {wolvesToSpawn}, Currently alive: {wolvesAlive}");
                     
                     if (wolfInstance != null)
                     {

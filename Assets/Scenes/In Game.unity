@@ -142569,6 +142569,7 @@ MonoBehaviour:
   meleeStoreParent: {fileID: 974476754}
   hud: {fileID: 573115332}
   tutorial: {fileID: 1140078898}
+  wolvesAlive: 0
 --- !u!114 &1854410664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142602,6 +142603,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9524111690534594f9499616354b6587, type: 2}
   - {fileID: 11400000, guid: 018ef7cda2b85ba4dbcda4405701e521, type: 2}
   - {fileID: 11400000, guid: 65ddb3ad5211dc44188160b58ab20e52, type: 2}
+  - {fileID: 11400000, guid: d5d63bb808b88ba4885afd015022fb09, type: 2}
 --- !u!1 &1856097443
 GameObject:
   m_ObjectHideFlags: 0

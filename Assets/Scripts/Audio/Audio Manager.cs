@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(musicSounds, x => x.name == name);
 
         if (s == null) {
-            Debug.Log("Music not found");
+            Logger.Log("Music not found");
         } else {
             musicSource.clip = s.clip;
             musicSource.Play();
@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(sfxSounds, x => x.name == name);
 
         if (s == null) {
-            Debug.Log("SFX not found");
+            Logger.Log("SFX not found");
         } else {
             sfxSource.PlayOneShot(s.clip);
         }

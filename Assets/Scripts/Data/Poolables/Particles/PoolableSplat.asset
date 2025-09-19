@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e7991a8890b1154dbe9b9f0674e3150, type: 3}
-  m_Name: ParticleColConfig
+  m_Script: {fileID: 11500000, guid: 71b2ba96306b34f41b80240b8bcf86b1, type: 3}
+  m_Name: PoolableSplat
   m_EditorClassIdentifier: 
-  splatPrefab: {fileID: 11400000, guid: d5d63bb808b88ba4885afd015022fb09, type: 2}
-  randomSplatChance: 0.5
-  splatDetectionDuration: 0.35
-  maxSplatDistance: 6
+  prefab: {fileID: 7623871242043538097, guid: 8c8f5a835f53b1c40a3dadfe99eaac32, type: 3}
+  poolSize: 150

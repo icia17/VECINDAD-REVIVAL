@@ -38,7 +38,7 @@ public class ObjectPooler : MonoBehaviour
     {
         if (!poolDictionary.ContainsKey(type))
         {
-            Debug.LogWarning("Pool para el tipo " + type.name + " no existe.");
+            Logger.LogWarning("Pool para el tipo " + type.name + " no existe.");
             return null;
         }
         
@@ -48,7 +48,7 @@ public class ObjectPooler : MonoBehaviour
             GameObject obj = Instantiate(type.prefab);
             obj.SetActive(false);
             poolDictionary[type].Enqueue(obj);
-            Debug.LogWarning("Pool para " + type.name + " estaba vacía. Se expandió.");
+            Logger.LogWarning("Pool para " + type.name + " estaba vacía. Se expandió.");
         }
 
         GameObject objectToSpawn = poolDictionary[type].Dequeue();

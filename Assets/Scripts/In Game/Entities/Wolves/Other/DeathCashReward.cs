@@ -13,7 +13,7 @@ public class DeathCashReward : MonoBehaviour
         if (TryGetComponent(out WolfHealthController lifeController))
             lifeController.OnDeath.AddListener(OnDeath); 
         else
-            Debug.Log("Couldn't subscribe to WolfLifeController's OnDeathEvent, Component Not Found!");
+            Logger.Log("Couldn't subscribe to WolfLifeController's OnDeathEvent, Component Not Found!");
     }
 
     private void OnDeath()

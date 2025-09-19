@@ -7,27 +7,17 @@
     <list default="true" id="395fd1c1-312a-48c1-9a8b-c432c98f491c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.VECINDAD-REVIVAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.VECINDAD-REVIVAL/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Materials/Glowy.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Glowy.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Entities/Turret.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Entities/Turret.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Other/Splat.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Other/Splat.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/In Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/In Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Items/Ak47.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Data/Items/Ak47.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Items/Glock.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Data/Items/Glock.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Items/M97.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Data/Items/M97.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Items/Turret.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Data/Items/Turret.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Wolves.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Wolves/Wolf_Blue_SO.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Wolves/Wolf_Blue_SO.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Wolves/Wolf_Red_SO.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Wolves/Wolf_Red_SO.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Wolves/Wolf_White_SO.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Wolves/Wolf_White_SO.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/Audio Manager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/Audio Manager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/Particles/ParticleColConfig.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Data/Particles/ParticleColConfig.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Inventory/Player Inventory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Inventory/Player Inventory.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Other/ParticleCollision.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Other/ParticleCollision.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Ranged/Bullet Statistics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Ranged/Bullet Statistics.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Ranged/MuzzleFlash.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Ranged/MuzzleFlash.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Ranged/Ranged Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Ranged/Ranged Controller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Turrets/Turret Ranged Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Turrets/Turret Ranged Controller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Other/WolfHealthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Other/WolfHealthController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Managers/WaveManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Managers/WaveManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Scriptable Objects/Items/ItemSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Scriptable Objects/Items/ItemSO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Scriptable Objects/Items/PoolableObjectSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Scriptable Objects/Items/PoolableObjectSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Splatter/DestroyAfter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Splatter/DestroyAfter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Scriptable Objects/Particles/ParticleCollisionConfigSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Scriptable Objects/Particles/ParticleCollisionConfigSO.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +29,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/50e5acd061cd4a73b7fc8eecbf07e915176600/8b/c51a9fab/ObjectPool`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Optimization/Logger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Scriptable Objects/Particles/ParticleCollisionConfigSO.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
@@ -118,7 +109,7 @@
       <workItem from="1758213342681" duration="3776000" />
       <workItem from="1758219251733" duration="5487000" />
       <workItem from="1758227418056" duration="11025000" />
-      <workItem from="1758286814234" duration="4831000" />
+      <workItem from="1758286814234" duration="8021000" />
     </task>
     <servers />
   </component>

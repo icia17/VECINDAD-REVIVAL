@@ -24,7 +24,7 @@ public class WolfHealthController : MonoBehaviour
     private void Awake() 
     {
         if (!TryGetComponent(out particleSystem))
-            Debug.Log("ParticleSystem Not Found!");
+            Logger.Log("ParticleSystem Not Found!");
     }
     
     public void InitializeWolf()
