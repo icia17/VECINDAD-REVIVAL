@@ -27,7 +27,7 @@ public class WalkToTarget : MonoBehaviour
 
     private void OnEnable()
     {
-        agent?.ResetPath();
+        stopWalking = false;
     }
 
     private void FixedUpdate() {

@@ -201,18 +201,12 @@ public class WaveManager : MonoBehaviour
                     if (wolfInstance != null)
                     {
                         wolfInstance.transform.SetParent(wolfHolder);
-
-                        WolfLifeController lifeController = wolfInstance.GetComponent<WolfLifeController>();
-                        if (lifeController != null)
-                        {
-                            lifeController.poolableType = wolfToSpawn;
-                            lifeController.InitializeWolf();
-                        }
                         
                         WolfHealthController healthController = wolfInstance.GetComponent<WolfHealthController>();
                         if (healthController != null)
                         {
-                            healthController.InitializeWolf();
+                            healthController.poolableType = wolfToSpawn;
+                            healthController.InitializeWolf(chosenSpawn);
                         }
                     }
                 }

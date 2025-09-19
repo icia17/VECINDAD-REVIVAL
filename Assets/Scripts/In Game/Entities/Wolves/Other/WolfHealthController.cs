@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.U2D;
 
 public class WolfHealthController : MonoBehaviour
 {
@@ -12,12 +15,19 @@ public class WolfHealthController : MonoBehaviour
     [Header("Wolf full body animator")]
     [SerializeField] private Animator animator;
 
+    [SerializeField] private List<SpriteRenderer> sprites;
+    
     [HideInInspector]
     public UnityEvent OnDeath;
 
+    [HideInInspector]
+    public PoolableObjectSO poolableType;
+    
     private ParticleSystem particleSystem;
     private bool isDead = false;
 
+    private float maxWolfHealth;
+    
     private readonly string deathAnim = "Death";
     private readonly string hurtAnim = "Damaged";
     
@@ -25,16 +35,39 @@ public class WolfHealthController : MonoBehaviour
     {
         if (!TryGetComponent(out particleSystem))
             Logger.Log("ParticleSystem Not Found!");
+
+        maxWolfHealth = wolfHealth;
     }
     
-    public void InitializeWolf()
+    public void InitializeWolf(Vector3 spawnPosition)
     {
         isDead = false;
+        wolfHealth = maxWolfHealth;
+        
+        transform.position = spawnPosition;
+        
+        var agent = GetComponent<NavMeshAgent>();
+        if (agent != null)
+        {
+            agent.Warp(spawnPosition); 
+            agent.ResetPath();   
+            agent.nextPosition = spawnPosition;
+        }
+
+        foreach (var sprite in sprites)
+        {
+            sprite.color = Color.white;
+        }
+
+        animator.enabled = true;
+        
+        var collider = GetComponentInChildren<BoxCollider2D>();
+        collider.enabled = true;
     }
 
     public void TakeDamage(float damage, bool splat) 
     {
-        if (isDead) return; // Prevent processing if already dead
+        if (isDead) return; 
 
         wolfHealth -= damage;
 
@@ -50,14 +83,14 @@ public class WolfHealthController : MonoBehaviour
 
     public void TakeMaxDamage()
     {
-        if (isDead) return; // Prevent processing if already dead
+        if (isDead) return; 
         
         Die();
     }
     
     private void Die()
     {
-        if (isDead) return; // Prevent multiple death calls
+        if (isDead) return; 
         
         isDead = true;
         
@@ -67,8 +100,8 @@ public class WolfHealthController : MonoBehaviour
         animator.Play(deathAnim);
     }
     
-    public void PostMortem() 
+    public void PostMortem()
     {
-        Destroy(gameObject);
+        ObjectPooler.Instance.ReturnToPool(poolableType, this.gameObject);
     }
 }
