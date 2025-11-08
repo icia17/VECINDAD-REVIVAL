@@ -32,14 +32,14 @@ public class LoseMenuController : MonoBehaviour
     public void QuitToTitleAction() {
         AudioManager.Instance.PlaySFX("Click");
 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void RetryAction() {
         AudioManager.Instance.PlaySFX("Click");
         
         GameManager.cash = 3000;
-        
-        SceneManager.LoadScene(1);
+
+        SceneManager.LoadScene("In Game");
     }
 }

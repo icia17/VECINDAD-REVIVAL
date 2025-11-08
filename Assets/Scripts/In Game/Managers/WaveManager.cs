@@ -47,7 +47,11 @@ public class WaveManager : MonoBehaviour
     [SerializeField] int wolvesAlive = 0;   
     
     public static int wolvesLeft;
-    public static WaveManager Instance; 
+    public static WaveManager Instance;
+
+
+    //tutorial stuff
+    public static bool finishTutorial = false;
     
     float baseTimerCD;
     int wolfCount;
@@ -60,7 +64,15 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.State = GameState.Timer;
+        if (!finishTutorial)
+        {
+            GameManager.State = GameState.Tutorial;
+        }
+        else
+        {
+            GameManager.State = GameState.Timer;
+        }
+
         baseTimerCD = timerCD;
         wolvesToSpawn = wolfAmount;
         wolvesLeft = wolfAmount;
@@ -70,6 +82,8 @@ public class WaveManager : MonoBehaviour
 
     private void Update()
     {
+       // Debug.Log(finishTutorial);
+        
         wolfCount = 0;
         foreach (Transform child in wolfHolder)
         {
@@ -102,7 +116,14 @@ public class WaveManager : MonoBehaviour
         
         CheckWaveCompletion();
     }
+    public void StartTimerCountdownAfterTutorial()
+    {
+        finishTutorial = true;
+        GameManager.State = GameState.Timer;
+        timerCD = baseTimerCD;
 
+        
+    }
     private void CheckWaveCompletion()
     {
         if (wolvesToSpawn <= 0 && wolvesAlive <= 0)

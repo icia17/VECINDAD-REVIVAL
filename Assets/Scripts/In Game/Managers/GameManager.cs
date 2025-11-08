@@ -55,5 +55,6 @@ public class GameManager : MonoBehaviour
 public enum GameState {
     Wave,
     Timer,
-    Lose
+    Lose,
+    Tutorial
 }
