@@ -22,11 +22,23 @@ public class PlayerInventory : MonoBehaviour
     [Header("Muzzle Flash")]
     [SerializeField] MuzzleFlash muzzleFlash;
 
+    [Header("Reload Indicator")]
+    [SerializeField] private SpriteRenderer reloadIndicator;
+    
     RangedController rangedController;
     MeleeController meleeController;
     PlayerController player;
     PlaceObject placeObject;
     AudioSource audioSource;
+
+    // Cache for performance
+    private bool lastArmState = false;
+    private bool lastHandsState = false;
+    private bool lastReloadIndicatorState = false;
+    private bool wasChosen = false; // NEW: Track if player was chosen last frame
+    private ItemSO lastSelectedItem = null;
+    private float aiWeaponCheckInterval = 0.5f;
+    private float aiWeaponCheckTimer = 0f;
 
     private void Awake()
     {
@@ -54,22 +66,66 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private void Update() {
-        if (selectedItem == null) {
-            arm.SetActive(false);
-            hands.SetActive(false);
+    private void Update() 
+    {
+        // Detect player switch and reset reload indicator
+        if (player.isChosen != wasChosen)
+        {
+            wasChosen = player.isChosen;
             
-            if (player.isChosen) {
+            if (!player.isChosen)
+            {
+                // Player was deselected - hide reload indicator
+                if (reloadIndicator != null)
+                {
+                    reloadIndicator.enabled = false;
+                }
+            }
+            
+            // Always reset cache when switching players to force recalculation
+            lastReloadIndicatorState = !player.isChosen; // Set opposite of current state to force update
+        }
+        
+        // Only update reload indicator when player is chosen
+        if (player.isChosen)
+        {
+            UpdateReloadIndicator();
+        }
+        
+        // Optimize null item handling
+        if (selectedItem == null) 
+        {
+            SetArmState(false);
+            SetHandsState(false);
+            
+            if (player.isChosen) 
+            {
                 PlaceObject.active = false;
             }
         }
         
         if (meleeController.swinging) { return; }
 
-        if (!player.isChosen) {
-            ChangeToWeapon();
+        // AI players - check weapon switching less frequently
+        if (!player.isChosen) 
+        {
+            aiWeaponCheckTimer += Time.deltaTime;
+            if (aiWeaponCheckTimer >= aiWeaponCheckInterval)
+            {
+                aiWeaponCheckTimer = 0f;
+                ChangeToWeapon();
+            }
             return;
         }
+
+        // Human player - handle input
+        HandleNumberKeyInput();
+    }
+
+    private void HandleNumberKeyInput()
+    {
+        // Early exit if no keys pressed
+        if (!Input.anyKeyDown) return;
 
         for (int i = 1; i <= 6; i++)
         {
@@ -81,6 +137,28 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    private void UpdateReloadIndicator()
+    {
+        if (reloadIndicator == null) return;
+
+        bool shouldShow = false;
+        
+        if (selectedItem != null)
+        {
+            shouldShow =
+                selectedItem.itemType == ItemType.Ranged &&
+                selectedItem.ammo <= 0 &&           
+                !selectedItem.reloading;
+        }
+        
+        // Only update if state changed
+        if (shouldShow != lastReloadIndicatorState)
+        {
+            lastReloadIndicatorState = shouldShow;
+            reloadIndicator.enabled = shouldShow;
+        }
+    }
+    
     private void Grabbed()
     {
         if (selectedItem == null) return;
@@ -89,31 +167,43 @@ public class PlayerInventory : MonoBehaviour
         selectedItem.swung = false;
     }
     
-    //TODO: ChangeToWeapon is freq call with non chosen players (AI)
-    private void ChangeToWeapon() {
+    private void ChangeToWeapon() 
+    {
         if (player.grabPlayer.IsGrabbed() || !player.playerHealth.alive) return;
 
-        if (selectedItem != null) {
-            if (selectedItem.totalAmmo + selectedItem.ammo > 0 || selectedItem.uses > 0) {
+        // Check if current weapon still has ammo/uses
+        if (selectedItem != null) 
+        {
+            if (selectedItem.totalAmmo + selectedItem.ammo > 0 || selectedItem.uses > 0) 
+            {
                 return;
             }
         }
 
-        for (int i = 0; i < inventory.Length; i++) {
-            if (inventory[i] == null) { continue; }
+        // Try to find ranged weapon first
+        for (int i = 0; i < inventory.Length; i++) 
+        {
+            ItemSO item = inventory[i];
+            if (item == null) { continue; }
 
-            if (inventory[i].itemType == ItemType.Ranged && inventory[i] != selectedItem) {
+            if (item.itemType == ItemType.Ranged && item != selectedItem) 
+            {
                 SlotChange(i + 1);
                 return;
             }
         }
 
+        // If current slot has something, don't switch
         if (inventory[numSelect] != null) return;
         
-        for (int i = 0; i < inventory.Length; i++) {
-            if (inventory[i] == null) { continue; }
+        // Try to find melee weapon
+        for (int i = 0; i < inventory.Length; i++) 
+        {
+            ItemSO item = inventory[i];
+            if (item == null) { continue; }
             
-            if (inventory[i].itemType == ItemType.Melee && inventory[i] != selectedItem) {
+            if (item.itemType == ItemType.Melee && item != selectedItem) 
+            {
                 SlotChange(i + 1);
                 return;
             }
@@ -122,22 +212,25 @@ public class PlayerInventory : MonoBehaviour
 
     private void SlotChange(int alpha)
     {
-        arm.SetActive(false);
-        hands.SetActive(false);
+        SetArmState(false);
+        SetHandsState(false);
 
-        if (player.isChosen) {
+        if (player.isChosen) 
+        {
             PlaceObject.active = false;
         }
 
         numSelect = alpha - 1;
         selectedItem = inventory[numSelect];
+        lastSelectedItem = selectedItem;
 
         if (inventory[numSelect] == null)
         {
             return;
         }
 
-        switch (inventory[numSelect].itemType) {
+        switch (inventory[numSelect].itemType) 
+        {
             case ItemType.Ranged:
                 ChangeToRanged(numSelect);
                 break;
@@ -149,33 +242,38 @@ public class PlayerInventory : MonoBehaviour
                 break;
         }
 
-        if (inventory[numSelect].wearSFX != null) {
+        if (inventory[numSelect].wearSFX != null) 
+        {
             audioSource.PlayOneShot(inventory[numSelect].wearSFX);
         }
     }
 
-    private void ChangeToRanged(int index) {   
-        arm.SetActive(true);
+    private void ChangeToRanged(int index) 
+    {   
+        SetArmState(true);
 
         muzzleFlash?.ZeroIntensity();
 
         rangedController.ChangeWeapon(inventory[index]);
     }
 
-    private void ChangeToMelee(int index) {
-        hands.SetActive(true);
+    private void ChangeToMelee(int index) 
+    {
+        SetHandsState(true);
 
         meleeController.ChangeWeapon(inventory[index]);
     }
 
-    private void ChangeToConstruction(int index) {
+    private void ChangeToConstruction(int index) 
+    {
         PlaceObject.active = true;
 
         ItemSO slot = inventory[index];
         placeObject.ChangePlaceable(slot.placerSprite, slot.spawn, slot.radius);
     }
 
-    public void ThrowWeapon() {
+    public void ThrowWeapon() 
+    {
         if (selectedItem == null) return;
         
         var thrownWeapon = Instantiate(throwaway, transform.position, head.rotation).GetComponent<PlayerThrow>();
@@ -184,25 +282,52 @@ public class PlayerInventory : MonoBehaviour
 
         inventory[numSelect] = null;
         selectedItem = null;
+        lastSelectedItem = null;
     }
 
-    public void GetWeapon(ItemSO weapon, GameObject obj) {
-        if (weapon.itemType == ItemType.Construction) {
-            for (int i = inventory.Length - 1; i > -1; i--) {
-                if (inventory[i] == null) {
+    public void GetWeapon(ItemSO weapon, GameObject obj) 
+    {
+        if (weapon.itemType == ItemType.Construction) 
+        {
+            for (int i = inventory.Length - 1; i > -1; i--) 
+            {
+                if (inventory[i] == null) 
+                {
                     inventory[i] = weapon;
                     Destroy(obj);
-                    break;
+                    return;
                 }
             }            
-        } else {
-            for (int i = 0; i < inventory.Length; i++) {
-                if (inventory[i] == null) {
+        } 
+        else 
+        {
+            for (int i = 0; i < inventory.Length; i++) 
+            {
+                if (inventory[i] == null) 
+                {
                     inventory[i] = weapon;
                     Destroy(obj);
-                    break;
+                    return;
                 }
             }
+        }
+    }
+
+    private void SetArmState(bool state)
+    {
+        if (lastArmState != state)
+        {
+            lastArmState = state;
+            arm.SetActive(state);
+        }
+    }
+
+    private void SetHandsState(bool state)
+    {
+        if (lastHandsState != state)
+        {
+            lastHandsState = state;
+            hands.SetActive(state);
         }
     }
 }

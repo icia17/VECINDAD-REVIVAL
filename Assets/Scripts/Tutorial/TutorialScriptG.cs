@@ -13,29 +13,38 @@ public class TutorialScriptG : MonoBehaviour
     [SerializeField] private float typingSpeed = 0.07f;
     
     [Header("TYPING SOUND")]
-    [SerializeField] private string typingSoundName = "TypeSound"; // Name of the sound in AudioManager
-    [SerializeField] private bool playOnEveryCharacter = true; // If false, plays on every Nth character
-    [SerializeField] private int soundInterval = 2; // Play sound every N characters (if playOnEveryCharacter is false)
+    [SerializeField] private string typingSoundName = "TypeSound";
+    [SerializeField] private bool playOnEveryCharacter = true;
+    [SerializeField] private int soundInterval = 2;
 
     private int currentLine = 0;
     private bool isTyping = false;
     private Coroutine typingCoroutine;
+    
+    // Cache for optimization
+    private WaitForSeconds typingDelay;
+    private bool tutorialFinished = false;
+    private bool inputPressed = false;
 
     void Start()
     {
         if (WaveManager.finishTutorial)
         {
             uiText.gameObject.SetActive(false);
+            tutorialFinished = true;
             return;
         }
 
-        // Evita errores si la lista está vacía
         if (tutorialLines == null || tutorialLines.Count == 0)
         {
             Debug.LogWarning("No hay tutorial lines asignados.");
+            tutorialFinished = true;
             return;
         }
 
+        // Cache the WaitForSeconds to avoid creating new ones every frame
+        typingDelay = new WaitForSeconds(typingSpeed);
+        
         typingCoroutine = StartCoroutine(ShowLine());
     }
 
@@ -44,12 +53,18 @@ public class TutorialScriptG : MonoBehaviour
         isTyping = true;
         uiText.text = "";
 
-        // Use anchoredPosition instead of position for UI elements
-        uiText.rectTransform.anchoredPosition = tutorialLines[currentLine].position;
+        // Cache the tutorial line to avoid repeated list access
+        TutorialLine currentTutorialLine = tutorialLines[currentLine];
+        
+        uiText.rectTransform.anchoredPosition = currentTutorialLine.position;
 
         int charCount = 0;
-        foreach (char c in tutorialLines[currentLine].text)
+        string lineText = currentTutorialLine.text;
+        int textLength = lineText.Length;
+        
+        for (int i = 0; i < textLength; i++)
         {
+            char c = lineText[i];
             uiText.text += c;
             
             // Play sound (skip spaces for better effect)
@@ -66,7 +81,16 @@ public class TutorialScriptG : MonoBehaviour
             }
             
             charCount++;
-            yield return new WaitForSeconds(typingSpeed);
+            
+            // Check if skip was pressed during typing
+            if (inputPressed)
+            {
+                inputPressed = false;
+                uiText.text = lineText; // Complete the text immediately
+                break;
+            }
+            
+            yield return typingDelay;
         }
 
         isTyping = false;
@@ -74,46 +98,68 @@ public class TutorialScriptG : MonoBehaviour
 
     void PlayTypingSound()
     {
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.PlaySFX(typingSoundName);
-        }
+        // Null check moved outside to avoid repeated checks
+        AudioManager.Instance?.PlaySFX(typingSoundName);
     }
 
     void Update()
     {
-        if (WaveManager.finishTutorial) return;
+        if (tutorialFinished) return;
 
+        // Only check input once per frame
         if (Input.GetKeyDown(KeyCode.X))
         {
-            if (isTyping)
+            HandleInput();
+        }
+    }
+
+    private void HandleInput()
+    {
+        if (isTyping)
+        {
+            // Signal the coroutine to skip
+            inputPressed = true;
+            
+            // Stop the coroutine
+            if (typingCoroutine != null)
             {
                 StopCoroutine(typingCoroutine);
-                uiText.text = tutorialLines[currentLine].text;
-                isTyping = false;
+            }
+            
+            // Complete the current line text
+            uiText.text = tutorialLines[currentLine].text;
+            isTyping = false;
+        }
+        else
+        {
+            currentLine++;
+
+            if (currentLine < tutorialLines.Count)
+            {
+                typingCoroutine = StartCoroutine(ShowLine());
             }
             else
             {
-                currentLine++;
-
-                if (currentLine < tutorialLines.Count)
-                {
-                    typingCoroutine = StartCoroutine(ShowLine());
-                }
-                else
-                {
-                    EndTutorial();
-                }
+                EndTutorial();
             }
         }
     }
 
     void EndTutorial()
     {
+        tutorialFinished = true;
         uiText.gameObject.SetActive(false);
 
-        if (WaveManager.Instance != null)
-            WaveManager.Instance.StartTimerCountdownAfterTutorial();
+        WaveManager.Instance?.StartTimerCountdownAfterTutorial();
+    }
+
+    private void OnDestroy()
+    {
+        // Clean up coroutine if script is destroyed
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+        }
     }
 }
 

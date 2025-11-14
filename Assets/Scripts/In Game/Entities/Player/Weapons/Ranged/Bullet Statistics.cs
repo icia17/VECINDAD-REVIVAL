@@ -37,10 +37,17 @@ public class BulletStatistics : MonoBehaviour
     private ParticleCollision particleCollision;
 
     private bool hasExploded = false;
+    private bool isActive = false; // Track if bullet is currently in use
 
     private TurretRangedController turretRangedController;
     
     private float originalBulletLifetime;
+    
+    // Cached ParticleSystem modules to avoid repeated GetModule calls
+    private ParticleSystem.CollisionModule cachedCollision;
+    private ParticleSystem.MainModule cachedMain;
+    private ParticleSystem.ShapeModule cachedShape;
+    private bool particleModulesCached = false;
 
     private void Awake()
     {
@@ -56,20 +63,33 @@ public class BulletStatistics : MonoBehaviour
         }
         
         originalBulletLifetime = bulletLifetime;
+        
+        // Cache particle system modules once
+        if (particleSys != null)
+        {
+            cachedCollision = particleSys.collision;
+            cachedMain = particleSys.main;
+            cachedShape = particleSys.shape;
+            particleModulesCached = true;
+        }
     }
 
-    public void Init(RangedController rangedController) {
+    public void Init(RangedController rangedController) 
+    {
         this.rangedController = rangedController;
         shooter = rangedController.playerHealth;
         poolableBulletType = rangedController.currentWeapon.bullet;
 
+        isActive = true;
         ResetBullet();
     }
     
-    public void InitTurret(TurretRangedController turretRangedController) {
+    public void InitTurret(TurretRangedController turretRangedController) 
+    {
         this.turretRangedController = turretRangedController;
         poolableBulletType = turretRangedController.bullet;
         
+        isActive = true;
         ResetBullet();
     }
     
@@ -97,11 +117,11 @@ public class BulletStatistics : MonoBehaviour
             particleSys.Stop();
             particleSys.Clear();
             
-            var collision = particleSys.collision;
-            collision.enabled = true;
-            
-            var main = particleSys.main;
-            main.startColor = Color.white;
+            if (particleModulesCached)
+            {
+                cachedCollision.enabled = true;
+                cachedMain.startColor = Color.white;
+            }
         }
         
         if (spriteRenderer != null)
@@ -111,7 +131,7 @@ public class BulletStatistics : MonoBehaviour
         
         if (animator != null && canExplode)
         {
-            animator.Play("Default"); 
+            animator.Play("Default", 0, 0f); // Added layer and normalized time for performance
         }
         
         if (audioSource != null)
@@ -127,101 +147,159 @@ public class BulletStatistics : MonoBehaviour
         rb.velocity = transform.up * bulletSpeed;
     }
 
-    private void Update() {
-        Lifetime();
+    private void Update() 
+    {
+        // Only run lifetime check if bullet is active
+        if (isActive)
+        {
+            Lifetime();
+        }
     }
 
-    private void Lifetime() {
+    private void Lifetime() 
+    {
         if (hasExploded) { return; }
 
         bulletLifetime -= Time.deltaTime;
 
-        if (bulletLifetime <= 0) {
-
-            if (rangedController != null) {
+        if (bulletLifetime <= 0) 
+        {
+            isActive = false; // Mark as inactive
+            
+            if (rangedController != null) 
+            {
                 rangedController.ReleaseBulletFromPool(this);
-            } else if (turretRangedController != null) {
+            } 
+            else if (turretRangedController != null) 
+            {
                 turretRangedController.ReleaseBulletFromPool(this);
-            } else {
+            } 
+            else 
+            {
                 Destroy(gameObject);
             }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
-        if (circleCol == null) { return; }
+    private void OnCollisionEnter2D(Collision2D other) 
+    {
+        if (circleCol == null || !isActive) { return; }
         
         circleCol.enabled = false;
         
-        var collision = particleSys.collision;
-        collision.enabled = false;
+        if (particleModulesCached)
+        {
+            cachedCollision.enabled = false;
+        }
         
         rb.constraints = RigidbodyConstraints2D.FreezePosition;
         
-        audioSource.PlayOneShot(audioClips[0]);
+        // Check if audio clip exists before playing
+        if (audioClips != null && audioClips.Length > 0 && audioClips[0] != null)
+        {
+            audioSource.PlayOneShot(audioClips[0]);
+        }
 
         ExplosionCheck();
         
         if (hasExploded) { return; }
 
         particleSys.Play();
-
         spriteRenderer.enabled = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (circleCol == null) { return; }
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+        if (circleCol == null || !isActive) { return; }
         
         circleCol.enabled = false;
-
         rb.constraints = RigidbodyConstraints2D.FreezePosition;
-
-        var main = particleSys.main;
-        var shape = particleSys.shape;
 
         canSplatter = true;
 
-        main.startColor = Color.red;
+        if (particleModulesCached)
+        {
+            cachedMain.startColor = Color.red;
+        }
         
         DoDamage(other);
         
-        audioSource.PlayOneShot(audioClips[1]);
+        // Check if audio clip exists before playing
+        if (audioClips != null && audioClips.Length > 1 && audioClips[1] != null)
+        {
+            audioSource.PlayOneShot(audioClips[1]);
+        }
 
         ExplosionCheck();
 
         if (hasExploded) { return; }
 
-        main.startSize = Random.Range(0.15f,0.25f);
-        main.startSpeed = Random.Range(40f,60f);
-        shape.rotation = Vector3.forward * 44f;
+        if (particleModulesCached)
+        {
+            cachedMain.startSize = Random.Range(0.15f, 0.25f);
+            cachedMain.startSpeed = Random.Range(40f, 60f);
+            cachedShape.rotation = Vector3.forward * 44f;
+        }
 
         particleSys.Play();
-        particleCollision.BeginSplat();
+        
+        if (particleCollision != null)
+        {
+            particleCollision.BeginSplat();
+        }
 
         spriteRenderer.enabled = false;
     }
 
     private void DoDamage(Collider2D other)
     {
-        if (rangedController != null) {
-            shooter.health += damage/10;
+        if (rangedController != null && shooter != null) 
+        {
+            shooter.health += damage * 0.1f; // Use multiplication instead of division
         }
 
         var wolfLife = other.GetComponentInParent<WolfHealthController>();
-
-        wolfLife.TakeDamage(damage, false);
+        
+        if (wolfLife != null)
+        {
+            wolfLife.TakeDamage(damage, false);
+        }
     }
 
-    private void ExplosionCheck() {
-        if (canExplode && !hasExploded) {
-            audioSource.PlayOneShot(audioClips[2]);
+    private void ExplosionCheck() 
+    {
+        if (canExplode && !hasExploded) 
+        {
+            // Check if audio clip exists before playing
+            if (audioClips != null && audioClips.Length > 2 && audioClips[2] != null)
+            {
+                audioSource.PlayOneShot(audioClips[2]);
+            }
+            
             particleSys.Play();
-            animator.Play("Explode");
+            
+            if (animator != null)
+            {
+                animator.Play("Explode", 0, 0f);
+            }
+            
             hasExploded = true;
         }
     }
 
-    public void Destroy() {
-        rangedController.ReleaseBulletFromPool(this);
+    public void Destroy() 
+    {
+        isActive = false;
+        
+        if (rangedController != null)
+        {
+            rangedController.ReleaseBulletFromPool(this);
+        }
+    }
+    
+    private void OnDisable()
+    {
+        // Mark as inactive when pooled/disabled
+        isActive = false;
     }
 }

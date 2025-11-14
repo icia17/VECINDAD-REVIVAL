@@ -13,7 +13,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] Transform wolfHolder;
 
     [Header("Wolf Types (Usando ScriptableObjects)")]
-    [SerializeField] List<PoolableObjectSO> wolfTypes; // <--- CAMBIO PRINCIPAL
+    [SerializeField] List<PoolableObjectSO> wolfTypes;
 
     [Header("Wave Specific Wolf Amount")]
     [SerializeField] int wolfAmount = 15;
@@ -41,7 +41,6 @@ public class WaveManager : MonoBehaviour
     [SerializeField] GameObject meleeStoreButton;
     [SerializeField] GameObject meleeStoreParent;
     [SerializeField] GameObject hud;
-    [SerializeField] GameObject tutorial;
 
     [Header("Wave Tracking - Debug Info")]
     [SerializeField] int wolvesAlive = 0;   
@@ -49,17 +48,27 @@ public class WaveManager : MonoBehaviour
     public static int wolvesLeft;
     public static WaveManager Instance;
 
-
-    //tutorial stuff
+    // Tutorial stuff
     public static bool finishTutorial = false;
     
     float baseTimerCD;
-    int wolfCount;
     int wolvesToSpawn;
+    
+    // Cache for performance
+    private int cachedWolfCount = 0;
+    private float wolfCountUpdateInterval = 0.1f; // Update every 0.1 seconds instead of every frame
+    private float wolfCountTimer = 0f;
+    private WaitForSeconds spawnDelay;
+    private Coroutine spawnCoroutine;
+    
+    // Text update optimization
+    private string lastStateText = "";
+    private int lastTimerValue = -1;
 
     private void Awake()
     {
-        Instance = this; 
+        Instance = this;
+        spawnDelay = new WaitForSeconds(0.05f); // Small delay between spawns
     }
 
     private void Start()
@@ -82,15 +91,12 @@ public class WaveManager : MonoBehaviour
 
     private void Update()
     {
-       // Debug.Log(finishTutorial);
-        
-        wolfCount = 0;
-        foreach (Transform child in wolfHolder)
+        // Only update wolf count periodically instead of every frame
+        wolfCountTimer += Time.deltaTime;
+        if (wolfCountTimer >= wolfCountUpdateInterval)
         {
-            if (child.gameObject.activeSelf)
-            {
-                wolfCount++;
-            }
+            wolfCountTimer = 0f;
+            UpdateWolfCount();
         }
 
         switch (GameManager.State)
@@ -99,7 +105,8 @@ public class WaveManager : MonoBehaviour
                 Timer();
                 break;
             case GameState.Wave:
-                Wave();
+                // Wave spawning now handled by coroutine
+                UpdateWaveUI();
                 break;
             case GameState.Lose:
                 Lose();
@@ -107,23 +114,37 @@ public class WaveManager : MonoBehaviour
         }
     }
     
+    // Optimized wolf count - only counts when needed
+    private void UpdateWolfCount()
+    {
+        cachedWolfCount = 0;
+        foreach (Transform child in wolfHolder)
+        {
+            if (child.gameObject.activeSelf)
+            {
+                cachedWolfCount++;
+            }
+        }
+    }
+    
     public void OnWolfDeath()
     {
         wolvesAlive--;
         wolvesLeft--;
+        cachedWolfCount--; // Update cache immediately
         
         Logger.Log($"Wolf died! Wolves alive: {wolvesAlive}, Wolves to spawn: {wolvesToSpawn}");
         
         CheckWaveCompletion();
     }
+    
     public void StartTimerCountdownAfterTutorial()
     {
         finishTutorial = true;
         GameManager.State = GameState.Timer;
         timerCD = baseTimerCD;
-
-        
     }
+    
     private void CheckWaveCompletion()
     {
         if (wolvesToSpawn <= 0 && wolvesAlive <= 0)
@@ -135,6 +156,13 @@ public class WaveManager : MonoBehaviour
 
     private void CompleteWave()
     {
+        // Stop spawn coroutine if running
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+            spawnCoroutine = null;
+        }
+        
         NextWaveBuffs();
         GameManager.State = GameState.Timer;
         meleeStoreButton.SetActive(true);
@@ -149,7 +177,14 @@ public class WaveManager : MonoBehaviour
     private void Timer()
     {
         timerCD -= Time.deltaTime;
-        stateObject.text = "Intermisión: " + Mathf.RoundToInt(timerCD) + "s";
+        
+        // Only update text when the value actually changes
+        int roundedTime = Mathf.RoundToInt(timerCD);
+        if (roundedTime != lastTimerValue)
+        {
+            lastTimerValue = roundedTime;
+            stateObject.text = "Intermisión: " + roundedTime + "s";
+        }
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -164,12 +199,12 @@ public class WaveManager : MonoBehaviour
 
     private void StartNewWave()
     {
-        tutorial.SetActive(false);
         wave++;
         
         wolvesToSpawn = wolfAmount;
         wolvesAlive = 0;
-        wolvesLeft = wolfAmount; 
+        wolvesLeft = wolfAmount;
+        cachedWolfCount = 0; // Reset cache
         
         GameManager.State = GameState.Wave;
         timerCD = baseTimerCD;
@@ -197,48 +232,80 @@ public class WaveManager : MonoBehaviour
         lights.Play("Off");
         
         Logger.Log($"Starting wave {wave} - Wolves to spawn: {wolvesToSpawn}");
-    }
-
-    private void Wave()
-    {
-        stateObject.text = "Oleada " + wave;
-
-        Vector2 chosenSpawn = spawn[Random.Range(0, spawn.Count)].transform.position;
-
-        if (wolfCount < maxAmount && wolvesToSpawn > 0)
+        
+        // Start spawn coroutine instead of spawning in Update
+        if (spawnCoroutine != null)
         {
-            for (int i = 0; i < wolfTypes.Count; i++)
+            StopCoroutine(spawnCoroutine);
+        }
+        spawnCoroutine = StartCoroutine(SpawnWolvesCoroutine());
+    }
+    
+    private void UpdateWaveUI()
+    {
+        string newText = "Oleada " + wave;
+        if (newText != lastStateText)
+        {
+            lastStateText = newText;
+            stateObject.text = newText;
+        }
+    }
+    
+    // Spawn wolves using coroutine to spread load over frames
+    private IEnumerator SpawnWolvesCoroutine()
+    {
+        while (wolvesToSpawn > 0)
+        {
+            if (cachedWolfCount < maxAmount)
             {
-                if (Random.Range(1, percent[i] + 1) == 1 && wolvesToSpawn > 0)
+                Vector2 chosenSpawn = spawn[Random.Range(0, spawn.Count)].position;
+                
+                // Try to spawn a wolf based on chances
+                for (int i = 0; i < wolfTypes.Count; i++)
                 {
-                    wolvesToSpawn--;
-                    wolvesAlive++; 
-
-                    PoolableObjectSO wolfToSpawn = wolfTypes[i];
-                    GameObject wolfInstance = ObjectPooler.Instance.SpawnFromPool(wolfToSpawn, chosenSpawn, Quaternion.identity);
-                    
-                    Logger.Log($"SPAWNING A WOLF! Remaining to spawn: {wolvesToSpawn}, Currently alive: {wolvesAlive}");
-                    
-                    if (wolfInstance != null)
+                    if (Random.Range(1, percent[i] + 1) == 1 && wolvesToSpawn > 0)
                     {
-                        wolfInstance.transform.SetParent(wolfHolder);
+                        wolvesToSpawn--;
+                        wolvesAlive++;
+                        cachedWolfCount++; // Update cache immediately
+
+                        PoolableObjectSO wolfToSpawn = wolfTypes[i];
+                        GameObject wolfInstance = ObjectPooler.Instance.SpawnFromPool(wolfToSpawn, chosenSpawn, Quaternion.identity);
                         
-                        WolfHealthController healthController = wolfInstance.GetComponent<WolfHealthController>();
-                        if (healthController != null)
+                        Logger.Log($"SPAWNING A WOLF! Remaining to spawn: {wolvesToSpawn}, Currently alive: {wolvesAlive}");
+                        
+                        if (wolfInstance != null)
                         {
-                            healthController.poolableType = wolfToSpawn;
-                            healthController.InitializeWolf(chosenSpawn);
+                            wolfInstance.transform.SetParent(wolfHolder);
+                            
+                            WolfHealthController healthController = wolfInstance.GetComponent<WolfHealthController>();
+                            if (healthController != null)
+                            {
+                                healthController.poolableType = wolfToSpawn;
+                                healthController.InitializeWolf(chosenSpawn);
+                            }
                         }
+                        
+                        // Small delay between spawns to spread load
+                        yield return spawnDelay;
+                        break; // Only spawn one wolf per iteration
                     }
                 }
             }
+            else
+            {
+                // Wait before checking again if at max capacity
+                yield return spawnDelay;
+            }
         }
         
+        spawnCoroutine = null;
         CheckWaveCompletion();
     }
 
     private void DestroyEmptyTurrets()
     {
+        // Cache the array to avoid repeated FindObjectsOfType calls
         TurretRangedController[] turrets = FindObjectsOfType<TurretRangedController>();
 
         foreach (var turret in turrets)
@@ -269,6 +336,12 @@ public class WaveManager : MonoBehaviour
 
     private void Lose()
     {
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+            spawnCoroutine = null;
+        }
+        
         AudioManager.Instance.musicSource.volume = 0.5f;
     }
 }

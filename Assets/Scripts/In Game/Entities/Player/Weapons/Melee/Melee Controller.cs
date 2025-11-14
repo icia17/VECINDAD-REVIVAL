@@ -1,97 +1,159 @@
-using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using Unity.VisualScripting;
 
 public class MeleeController : MonoBehaviour
 {
     [Header("Current Weapon Properties")]
     public ItemSO currentWeapon;
-    [SerializeField] SpriteRenderer swingSpriteRenderer;
+    [SerializeField] private SpriteRenderer swingSpriteRenderer;
 
     [Header("Audio Source")]
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
 
     [HideInInspector] public bool swinging = false;
     
-    Animator animator;
-    SpriteRenderer spriteRenderer;
-    PlayerInventory inv;
-    PlayerController player;
-    PlayerLOSController los;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
+    private PlayerInventory inv;
+    private PlayerController player;
+    private PlayerLOSController los;
 
-    private void Start() {
-        spriteRenderer = GetComponent<SpriteRenderer>();    
-        inv = GetComponentInParent<PlayerInventory>();
+    private const float AI_SWING_DISTANCE = 2.5f;
+    private const float SWING_DURATION = 0.5f;
+
+    private void Awake() 
+    {
+        CacheComponents();
+    }
+
+    private void CacheComponents()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        inv = GetComponentInParent<PlayerInventory>();
         player = GetComponentInParent<PlayerController>();
         los = GetComponentInParent<PlayerLOSController>();
     }
 
-    private void FixedUpdate() {
-        if (currentWeapon == null) { return; }    
+    private void FixedUpdate() 
+    {
+        if (currentWeapon == null) return;
         
-        if (currentWeapon.uses <= 0) {
-            swinging = false;
-            inv.inventory[inv.numSelect] = null;
-            inv.selectedItem = null;
-        }
+        CheckWeaponDurability();
 
-        if (!player.isChosen) {
+        if (player != null && !player.isChosen)
+        {
             AISwing();
         }
     }
 
-    private void AISwing() {
-        if (currentWeapon.swung || los.closestWolf == null) return;
+    private void CheckWeaponDurability()
+    {
+        if (currentWeapon.uses <= 0)
+        {
+            swinging = false;
+            
+            if (inv != null && inv.numSelect < inv.inventory.Length)
+            {
+                inv.inventory[inv.numSelect] = null;
+                inv.selectedItem = null;
+            }
+        }
+    }
 
-        if (Vector3.Distance(transform.position, los.closestWolf.transform.position) < 2.5f) {
+    private void AISwing() 
+    {
+        if (currentWeapon.swung || los == null || los.closestWolf == null) return;
+
+        float distanceToTarget = Vector3.Distance(transform.position, los.closestWolf.transform.position);
+        
+        if (distanceToTarget < AI_SWING_DISTANCE)
+        {
             Swing();
         }
     }
 
-    public void ChangeWeapon(ItemSO weaponChosen) {
-        if (weaponChosen == null) return; 
+    public void ChangeWeapon(ItemSO weaponChosen) 
+    {
+        if (weaponChosen == null) return;
 
         currentWeapon = weaponChosen;
-
-        spriteRenderer.sprite = currentWeapon.heldSprite;
-        swingSpriteRenderer.sprite = null;
-
         currentWeapon.swung = false;
+
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = currentWeapon.heldSprite;
+        }
+
+        if (swingSpriteRenderer != null)
+        {
+            swingSpriteRenderer.sprite = null;
+        }
     }
 
-    public void Swing() {
-        if (currentWeapon.swung) return;
+    public void Swing() 
+    {
+        if (currentWeapon == null || currentWeapon.swung) return;
 
         StartCoroutine(OnSwing());
     }
 
-    private IEnumerator OnSwing() {
-        audioSource.PlayOneShot(currentWeapon.swingSFX);
+    private IEnumerator OnSwing() 
+    {
+        if (audioSource != null && currentWeapon.swingSFX != null)
+        {
+            audioSource.PlayOneShot(currentWeapon.swingSFX);
+        }
         
-        player.swinging = true;
-        currentWeapon.swung = true;
+        if (player != null)
+        {
+            player.swinging = true;
+        }
 
+        currentWeapon.swung = true;
         swinging = true;
 
-        swingSpriteRenderer.sprite = currentWeapon.itemSprite;
-        spriteRenderer.sprite = null;
+        if (swingSpriteRenderer != null)
+        {
+            swingSpriteRenderer.sprite = currentWeapon.itemSprite;
+        }
 
-        animator.Play("Swing");
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = null;
+        }
 
-        yield return new WaitForSeconds(0.5f);
+        if (animator != null)
+        {
+            animator.Play("Swing");
+        }
+
+        yield return new WaitForSeconds(SWING_DURATION);
 
         swinging = false;
-        player.swinging = false;
+        
+        if (player != null)
+        {
+            player.swinging = false;
+        }
 
         yield return new WaitForSeconds(currentWeapon.swingCooldown);
 
-        currentWeapon.swung = false;
+        if (currentWeapon != null)
+        {
+            currentWeapon.swung = false;
+        }
     }
 
-    public void SwingOff() {
+    public void SwingOff() 
+    {
+        if (currentWeapon == null || spriteRenderer == null) return;
+
         spriteRenderer.sprite = currentWeapon.heldSprite;
-        swingSpriteRenderer.sprite = null;
+        
+        if (swingSpriteRenderer != null)
+        {
+            swingSpriteRenderer.sprite = null;
+        }
     }
 }
