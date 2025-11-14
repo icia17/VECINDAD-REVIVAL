@@ -9,6 +9,12 @@ using Cinemachine;
 
 public class RangedController : MonoBehaviour
 {
+    
+    //imagen de la R.
+    [SerializeField] private SpriteRenderer reloadIndicator;
+    /// <summary>
+    /// ///
+    /// </summary>
     [Header("Shooting Position Properties")]
     [SerializeField] Light2D muzzleFlash;
     public Transform shootPos;
@@ -35,8 +41,21 @@ public class RangedController : MonoBehaviour
     private void Awake() {
         player = GetComponent<PlayerController>();
         los = GetComponent<PlayerLOSController>();
+
     }
-    
+    private void Start()
+    {
+      /*  if (reloadIndicator != null)
+        {
+            reloadIndicator.enabled = false;
+            Debug.Log("test");
+        }
+        else
+        {
+            Debug.Log("putaso");
+        }*/
+    }
+
     private void FixedUpdate() {
         if (currentWeapon == null) { return; }
         if (currentWeapon.itemType != ItemType.Ranged) { return; }
@@ -53,6 +72,19 @@ public class RangedController : MonoBehaviour
                 Reload();
             }
         }
+        
+        UpdateReloadIndicator();
+    }
+    private void UpdateReloadIndicator()
+    {
+        if (reloadIndicator == null) return;
+
+        bool shouldShow =
+            player.isChosen &&                   
+            currentWeapon.ammo <= 0 &&           
+            !currentWeapon.reloading;            
+
+        reloadIndicator.enabled = shouldShow;
     }
 
     public void ChangeWeapon(ItemSO weaponChosen) {
