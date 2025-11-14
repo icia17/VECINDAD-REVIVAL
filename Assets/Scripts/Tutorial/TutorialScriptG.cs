@@ -9,9 +9,13 @@ public class TutorialScriptG : MonoBehaviour
     [SerializeField] private TMP_Text uiText;
 
     [Header("EDIT DEL TEXTO DEL TUTORIAL")]
-    [TextArea(2, 5)]
     [SerializeField] private List<TutorialLine> tutorialLines;
     [SerializeField] private float typingSpeed = 0.07f;
+    
+    [Header("TYPING SOUND")]
+    [SerializeField] private string typingSoundName = "TypeSound"; // Name of the sound in AudioManager
+    [SerializeField] private bool playOnEveryCharacter = true; // If false, plays on every Nth character
+    [SerializeField] private int soundInterval = 2; // Play sound every N characters (if playOnEveryCharacter is false)
 
     private int currentLine = 0;
     private bool isTyping = false;
@@ -25,7 +29,7 @@ public class TutorialScriptG : MonoBehaviour
             return;
         }
 
-        // Evita errores si la lista est· vacÌa
+        // Evita errores si la lista est√° vac√≠a
         if (tutorialLines == null || tutorialLines.Count == 0)
         {
             Debug.LogWarning("No hay tutorial lines asignados.");
@@ -40,15 +44,40 @@ public class TutorialScriptG : MonoBehaviour
         isTyping = true;
         uiText.text = "";
 
-        uiText.transform.position = tutorialLines[currentLine].position;
+        // Use anchoredPosition instead of position for UI elements
+        uiText.rectTransform.anchoredPosition = tutorialLines[currentLine].position;
 
+        int charCount = 0;
         foreach (char c in tutorialLines[currentLine].text)
         {
             uiText.text += c;
+            
+            // Play sound (skip spaces for better effect)
+            if (c != ' ')
+            {
+                if (playOnEveryCharacter)
+                {
+                    PlayTypingSound();
+                }
+                else if (charCount % soundInterval == 0)
+                {
+                    PlayTypingSound();
+                }
+            }
+            
+            charCount++;
             yield return new WaitForSeconds(typingSpeed);
         }
 
         isTyping = false;
+    }
+
+    void PlayTypingSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(typingSoundName);
+        }
     }
 
     void Update()
