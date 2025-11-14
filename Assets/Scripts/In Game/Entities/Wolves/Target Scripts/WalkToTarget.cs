@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,17 +6,35 @@ public class WalkToTarget : MonoBehaviour
     [Header("Wolf lower body animator")]
     public Animator animator;
 
-    ClosestTarget closestTarget;
-    NavMeshAgent agent;
-    Vector3 posVelocity = Vector3.zero;
-
+    private ClosestTarget closestTarget;
+    private NavMeshAgent agent;
+    private Vector3 posVelocity = Vector3.zero;
     private bool stopWalking = false;
+    
+    private const float SMOOTH_TIME = 0.1f;
 
-    private void Start() {
-        GetComponent<WolfHealthController>().OnDeath.AddListener(() => { stopWalking = true; });
+    private void Start() 
+    {
+        CacheComponents();
+        ConfigureNavMeshAgent();
+    }
+
+    private void CacheComponents()
+    {
+        var healthController = GetComponent<WolfHealthController>();
+        if (healthController != null)
+        {
+            healthController.OnDeath.AddListener(() => { stopWalking = true; });
+        }
+
         closestTarget = GetComponent<ClosestTarget>();
         agent = GetComponent<NavMeshAgent>();
-        
+    }
+
+    private void ConfigureNavMeshAgent()
+    {
+        if (agent == null) return;
+
         agent.updatePosition = false;
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -30,18 +45,34 @@ public class WalkToTarget : MonoBehaviour
         stopWalking = false;
     }
 
-    private void FixedUpdate() {
-        if (stopWalking) {
-            animator.Play("Idle");
+    private void FixedUpdate() 
+    {
+        if (stopWalking) 
+        {
+            if (animator != null)
+            {
+                animator.Play("Idle");
+            }
             return; 
         }
         
-        animator.Play("Walk");
+        if (animator != null)
+        {
+            animator.Play("Walk");
+        }
         
-        if (closestTarget.closestPlayer == null) { return; }
+        if (closestTarget == null || closestTarget.closestPlayer == null || agent == null) 
+        {
+            return;
+        }
         
         agent.SetDestination(closestTarget.closestPlayer.transform.position);
 
-        transform.position = Vector3.SmoothDamp(transform.position, agent.nextPosition, ref posVelocity, 0.1f);
+        transform.position = Vector3.SmoothDamp(
+            transform.position, 
+            agent.nextPosition, 
+            ref posVelocity, 
+            SMOOTH_TIME
+        );
     }
 }

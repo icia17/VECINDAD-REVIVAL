@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ClosestTarget : MonoBehaviour
@@ -10,27 +8,41 @@ public class ClosestTarget : MonoBehaviour
     [HideInInspector]
     public PlayerList closestPlayer;
 
-    private void Start() {
+    private void Start() 
+    {
         closestPlayer = FindObjectOfType<PlayerList>();
     }
 
-    private void OnEnable() {
+    private void OnEnable() 
+    {
         Ticker.OnTickAction += Tick;
     }
 
-    private void OnDisable() {
+    private void OnDisable() 
+    {
         Ticker.OnTickAction -= Tick;
     }
 
-    private void Tick() {
-        foreach(var player in PlayerListLists.players) {
-            if (closestPlayer == null) {
-                closestPlayer = player;
-            }
+    private void Tick() 
+    {
+        if (PlayerListLists.players == null || PlayerListLists.players.Count == 0) return;
 
-            if (Vector2.Distance(transform.position, player.transform.position) < Vector2.Distance(transform.position, closestPlayer.transform.position)) {
-                closestPlayer = player;
+        float closestDistance = float.MaxValue;
+        PlayerList newClosest = closestPlayer;
+
+        foreach (var player in PlayerListLists.players) 
+        {
+            if (player == null) continue;
+
+            float distance = Vector2.Distance(transform.position, player.transform.position);
+            
+            if (distance < closestDistance) 
+            {
+                closestDistance = distance;
+                newClosest = player;
             }
         }
+
+        closestPlayer = newClosest;
     }
 }

@@ -259,46 +259,47 @@ public class WaveManager : MonoBehaviour
             if (cachedWolfCount < maxAmount)
             {
                 Vector2 chosenSpawn = spawn[Random.Range(0, spawn.Count)].position;
-                
-                // Try to spawn a wolf based on chances
-                for (int i = 0; i < wolfTypes.Count; i++)
+            
+                // Randomly pick which wolf type to try spawning
+                int randomWolfIndex = Random.Range(0, wolfTypes.Count);
+            
+                if (Random.Range(1, percent[randomWolfIndex] + 1) == 1 && wolvesToSpawn > 0)
                 {
-                    if (Random.Range(1, percent[i] + 1) == 1 && wolvesToSpawn > 0)
-                    {
-                        wolvesToSpawn--;
-                        wolvesAlive++;
-                        cachedWolfCount++; // Update cache immediately
+                    wolvesToSpawn--;
+                    wolvesAlive++;
+                    cachedWolfCount++;
 
-                        PoolableObjectSO wolfToSpawn = wolfTypes[i];
-                        GameObject wolfInstance = ObjectPooler.Instance.SpawnFromPool(wolfToSpawn, chosenSpawn, Quaternion.identity);
-                        
-                        Logger.Log($"SPAWNING A WOLF! Remaining to spawn: {wolvesToSpawn}, Currently alive: {wolvesAlive}");
-                        
-                        if (wolfInstance != null)
+                    PoolableObjectSO wolfToSpawn = wolfTypes[randomWolfIndex];
+                    GameObject wolfInstance = ObjectPooler.Instance.SpawnFromPool(wolfToSpawn, chosenSpawn, Quaternion.identity);
+                
+                    Logger.Log($"SPAWNING Wolf Type {randomWolfIndex}! Remaining: {wolvesToSpawn}, Alive: {wolvesAlive}");
+                
+                    if (wolfInstance != null)
+                    {
+                        wolfInstance.transform.SetParent(wolfHolder);
+                    
+                        WolfHealthController healthController = wolfInstance.GetComponent<WolfHealthController>();
+                        if (healthController != null)
                         {
-                            wolfInstance.transform.SetParent(wolfHolder);
-                            
-                            WolfHealthController healthController = wolfInstance.GetComponent<WolfHealthController>();
-                            if (healthController != null)
-                            {
-                                healthController.poolableType = wolfToSpawn;
-                                healthController.InitializeWolf(chosenSpawn);
-                            }
+                            healthController.poolableType = wolfToSpawn;
+                            healthController.InitializeWolf(chosenSpawn);
                         }
-                        
-                        // Small delay between spawns to spread load
-                        yield return spawnDelay;
-                        break; // Only spawn one wolf per iteration
                     }
+                
+                    yield return spawnDelay;
+                }
+                else
+                {
+                    // Failed spawn chance, try again next frame
+                    yield return spawnDelay;
                 }
             }
             else
             {
-                // Wait before checking again if at max capacity
                 yield return spawnDelay;
             }
         }
-        
+    
         spawnCoroutine = null;
         CheckWaveCompletion();
     }

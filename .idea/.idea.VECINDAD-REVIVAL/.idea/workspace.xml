@@ -6,43 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="395fd1c1-312a-48c1-9a8b-c432c98f491c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.VECINDAD-REVIVAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.VECINDAD-REVIVAL/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animators/In Game/UI/Reload/ReloadIdle.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animators/In Game/UI/Reload/ReloadIdle.anim" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Materials/Glowy.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Glowy.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/AK47/akreload.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/AK47/akreload.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/AK47/akshot.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/AK47/akshot.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/AK47/akwear.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/AK47/akwear.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/BLOOD/splat1.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/BLOOD/splat1.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/BUILDS/TurretPlace (mp3cut.net).ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/BUILDS/TurretPlace (mp3cut.net).ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/BUILDS/ammoplace.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/BUILDS/ammoplace.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/BUILDS/wear (mp3cut.net).ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/BUILDS/wear (mp3cut.net).ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/GLOCK/glockreload.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/GLOCK/glockreload.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/GLOCK/glockshot.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/GLOCK/glockshot.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/GLOCK/glockwear.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/GLOCK/glockwear.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/HIT/wallhit.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/HIT/wallhit.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/HIT/wolfhit.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/HIT/wolfhit.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/M97/explosion.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/M97/explosion.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/M97/mreload.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/M97/mreload.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/M97/mshot.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/M97/mshot.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/M97/mwear.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/M97/mwear.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/MELEE/swing(1) (mp3cut.net) (1).ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/MELEE/swing(1) (mp3cut.net) (1).ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/MELEE/wear (mp3cut.net).ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/MELEE/wear (mp3cut.net).ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/MUSIC/Theme of Dalmimi.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/MUSIC/Theme of Dalmimi.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/MUSIC/VECINDAD_OST_3 (mp3cut.net).ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/MUSIC/VECINDAD_OST_3 (mp3cut.net).ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/MUSIC/vecindadost1.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/MUSIC/vecindadost1.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/MUSIC/vecindadost2.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/MUSIC/vecindadost2.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/PLAYER/bloodlust.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/PLAYER/bloodlust.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/PLAYER/hurt.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/PLAYER/hurt.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/STORES/kaching.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/STORES/kaching.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/UI/click.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/UI/click.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/WOLVES/rspawn (mp3cut.net).ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/WOLVES/rspawn (mp3cut.net).ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/WOLVES/whurt.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/WOLVES/whurt.ogg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SFX/WOLVES/wsteps.ogg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SFX/WOLVES/wsteps.ogg.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/In Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/In Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Inventory/Player Inventory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Inventory/Player Inventory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Melee/Melee Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Melee/Melee Controller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Ranged/Bullet Statistics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Ranged/Bullet Statistics.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Ranged/Ranged Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Weapons/Ranged/Ranged Controller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/ClosestTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/ClosestTarget.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/RedWalkToTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/RedWalkToTarget.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/RotateToTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/RotateToTarget.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/WalkToTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/WalkToTarget.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Managers/WaveManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Managers/WaveManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tutorial/TutorialScriptG.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Tutorial/TutorialScriptG.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Anton SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Anton SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Bangers SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Bangers SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Electronic Highway Sign SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Electronic Highway Sign SDF.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +62,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/OneDrive/Escritorio/VECINDAD\VECINDAD PROJECT.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/OneDrive/Escritorio/EXPERIMENTAL-VECINDAD-REVIVAL\VECINDAD PROJECT.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="C:\Users\nacho\OneDrive\Escritorio\VECINDAD" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -143,7 +118,7 @@
       <workItem from="1758219251733" duration="5487000" />
       <workItem from="1758227418056" duration="11025000" />
       <workItem from="1758286814234" duration="13719000" />
-      <workItem from="1763128253627" duration="7515000" />
+      <workItem from="1763128253627" duration="10122000" />
     </task>
     <servers />
   </component>

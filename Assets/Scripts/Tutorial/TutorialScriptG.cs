@@ -25,6 +25,7 @@ public class TutorialScriptG : MonoBehaviour
     private WaitForSeconds typingDelay;
     private bool tutorialFinished = false;
     private bool inputPressed = false;
+    // 'wasPaused' is no longer needed
 
     void Start()
     {
@@ -106,7 +107,16 @@ public class TutorialScriptG : MonoBehaviour
     {
         if (tutorialFinished) return;
 
-        // Only check input once per frame
+        // If the game is paused, stop all further execution in Update.
+        // 1. This prevents 'X' from being processed.
+        // 2. This allows the ShowLine coroutine to "freeze" naturally
+        //    because it's waiting on 'typingDelay' (a WaitForSeconds).
+        if (Time.timeScale == 0)
+        {
+            return; 
+        }
+
+        // This code will now ONLY run if the game is NOT paused
         if (Input.GetKeyDown(KeyCode.X))
         {
             HandleInput();
