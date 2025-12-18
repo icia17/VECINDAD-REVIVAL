@@ -6,18 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="395fd1c1-312a-48c1-9a8b-c432c98f491c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.VECINDAD-REVIVAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.VECINDAD-REVIVAL/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animators/In Game/UI/Reload/ReloadIdle.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animators/In Game/UI/Reload/ReloadIdle.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Glowy.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Glowy.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/In Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/In Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/ClosestTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/ClosestTarget.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/RedWalkToTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/RedWalkToTarget.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/RotateToTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/RotateToTarget.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/WalkToTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Wolves/Target Scripts/WalkToTarget.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Managers/WaveManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Managers/WaveManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tutorial/TutorialScriptG.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Tutorial/TutorialScriptG.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Anton SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Anton SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Bangers SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Bangers SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Electronic Highway Sign SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Electronic Highway Sign SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Player Controller/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Entities/Player/Player Controller/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/In Game/Pause Menu/Pause Menu Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/In Game/Pause Menu/Pause Menu Controller.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +21,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/50e5acd061cd4a73b7fc8eecbf07e915176600/8b/c51a9fab/ObjectPool`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Optimization/Logger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Scriptable Objects/Particles/ParticleCollisionConfigSO.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.animation@9.1.2/Editor/SkinningModule/SkinningCache/SpriteCacheExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.7.6/Editor/Actions/ActionManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Text.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -44,7 +37,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Lagbranch&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;FinalBranch&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -62,7 +55,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/OneDrive/Escritorio/EXPERIMENTAL-VECINDAD-REVIVAL\VECINDAD PROJECT.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/OneDrive/Escritorio/VECINDAD-REVIVAL\VECINDAD PROJECT.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="C:\Users\nacho\OneDrive\Escritorio\VECINDAD" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -118,7 +111,8 @@
       <workItem from="1758219251733" duration="5487000" />
       <workItem from="1758227418056" duration="11025000" />
       <workItem from="1758286814234" duration="13719000" />
-      <workItem from="1763128253627" duration="10122000" />
+      <workItem from="1763128253627" duration="10888000" />
+      <workItem from="1766062839554" duration="985000" />
     </task>
     <servers />
   </component>

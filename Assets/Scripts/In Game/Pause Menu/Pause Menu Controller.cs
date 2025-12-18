@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,8 @@ public class PauseMenuController : MonoBehaviour
     [Header("Input Menu Game Objects")]
     public RectTransform pauseMenu;
     public RectTransform settingsMenu;
+    public GameObject HUD;
+    public TextMeshProUGUI tutorialText;
 
     private Vector3 basePausePos;
     private Vector3 baseSettingsPos;
@@ -39,6 +42,8 @@ public class PauseMenuController : MonoBehaviour
     public void BackToGame() {
         AudioManager.Instance.PlaySFX("Click");
 
+        HUD.SetActive(true);
+        tutorialText.color = Color.white;
         Time.timeScale = 1;
         isPaused = false;
         pauseMenu.anchoredPosition = new Vector3(100000,0,0);
@@ -47,6 +52,8 @@ public class PauseMenuController : MonoBehaviour
     public void EscToGame() {
         AudioManager.Instance.PlaySFX("Click");
 
+        HUD.SetActive(true);
+        tutorialText.color = Color.white;
         Time.timeScale = 1;
         isPaused = false;
         pauseMenu.anchoredPosition = new Vector3(100000,0,0);
@@ -62,7 +69,9 @@ public class PauseMenuController : MonoBehaviour
 
     public void OpenPauseMenu() {
         AudioManager.Instance.PlaySFX("Click");
-        
+
+        HUD.SetActive(false);
+        tutorialText.color = Color.clear;
         Time.timeScale = 0;
         isPaused = true;
         pauseMenu.anchoredPosition = basePausePos;

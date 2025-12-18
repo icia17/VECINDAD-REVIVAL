@@ -34,9 +34,6 @@ public class PlayerController : MonoBehaviour
     [Header("Pause Menu Control")]
     public PauseMenuController pauseMenuController;
 
-    [Header("HUD GameObject")]
-    [SerializeField] GameObject HUD;
-
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public bool changingPlayers = false;
     [HideInInspector] public GrabbablePlayer grabPlayer;
@@ -150,16 +147,12 @@ public class PlayerController : MonoBehaviour
         
         if (pauseMenuController.isPaused) {
             AudioManager.Instance.audioMixer.SetFloat("lowpass", 5000);
-
-            HUD.SetActive(true);
-
+            
             pauseMenuController.EscToGame();
             return;
         }
 
         AudioManager.Instance.audioMixer.SetFloat("lowpass", 500);
-
-        HUD.SetActive(false);
         
         pauseMenuController.OpenPauseMenu();
     }
